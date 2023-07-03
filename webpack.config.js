@@ -9,23 +9,23 @@ const webpack = require("webpack");
 const targetList = require("./src/cli-flags-helper").targetList;
 
 function getTarget(env) {
-  return env && targetList.has(env.only) && env.only;
+  return env?.only && targetList.has(env.only);
 }
 
-module.exports = env => [
+module.exports = (env) => [
   {
     context: path.resolve("src"),
     entry: "./cli.js",
     output: {
       filename: "cli.js",
-      path: path.resolve("dist")
+      path: path.resolve("dist"),
     },
     bail: true,
     resolve: {
       alias: {
         fs: require.resolve("./src/vfs"),
-        module: require.resolve("./src/mocks/dummy")
-      }
+        module: require.resolve("./src/mocks/dummy"),
+      },
     },
     plugins: [
       new webpack.BannerPlugin({
@@ -35,44 +35,46 @@ module.exports = env => [
           "if (typeof console === 'undefined') {\n" +
           "  console = {log: print};\n" +
           "}",
-        raw: true
+        raw: true,
       }),
       new webpack.DefinePlugin({
-        ONLY: JSON.stringify(getTarget(env))
-      })
-    ]
+        ONLY: JSON.stringify(getTarget(env)),
+      }),
+    ],
   },
   {
     context: path.resolve("src"),
     entry: "./bootstrap.js",
     output: {
       filename: "browser.js",
-      path: path.resolve("dist")
+      path: path.resolve("dist"),
     },
     bail: true,
     resolve: {
       alias: {
         define: require.resolve("./src/mocks/dummy"),
         fs: require.resolve("./src/vfs"),
-        module: require.resolve("./src/mocks/dummy")
-      }
+        module: require.resolve("./src/mocks/dummy"),
+      },
     },
     plugins: [
-      new CopyWebpackPlugin([{ from: "style.css" }, { from: "Logo.png" }]),
+      new CopyWebpackPlugin({
+        patterns: [{ from: "style.css" }, { from: "Logo.png" }],
+      }),
       new webpack.BannerPlugin({
         banner:
           "// Work-around for the weird JaegerMonkey\n" +
           "// work-around inside benchmark.js.\n" +
           "const define = { amd: {} };\n",
-        raw: true
+        raw: true,
       }),
       new HtmlWebpackPlugin({
         template: "./index.html",
-        inject: "head"
+        inject: "head",
       }),
       new webpack.DefinePlugin({
-        ONLY: JSON.stringify(getTarget(env))
-      })
-    ]
-  }
+        ONLY: JSON.stringify(getTarget(env)),
+      }),
+    ],
+  },
 ];

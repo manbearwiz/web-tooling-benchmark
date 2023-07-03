@@ -3,17 +3,17 @@
 // found in the LICENSE file.
 
 const Babel = require("@babel/standalone");
-const babylon = require("babylon");
+const parser = require("@babel/parser");
 const fs = require("fs");
 
 const payloads = [
   {
     name: "vue.runtime.esm-nobuble-2.4.4.js",
-    options: { presets: ["es2015"], sourceType: "module" }
-  }
+    options: { presets: ["es2015"], sourceType: "module" },
+  },
 ].map(({ name, options }) => {
   const code = fs.readFileSync(`third_party/${name}`, "utf8");
-  const ast = babylon.parse(code, options);
+  const ast = parser.parse(code, options);
   return { ast, code, options };
 });
 
@@ -23,5 +23,5 @@ module.exports = {
     return payloads.map(({ ast, code, options }) =>
       Babel.transformFromAst(ast, code, options)
     );
-  }
+  },
 };

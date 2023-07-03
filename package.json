@@ -40,7 +40,7 @@
   },
   "license": "BSD-3-Clause",
   "dependencies": {
-    "@babel/parser": "^7.22.5",
+    "@babel/parser": "7.22.5",
     "@babel/standalone": "7.22.5",
     "acorn": "6.4.2",
     "acorn-walk": "^6.2.0",

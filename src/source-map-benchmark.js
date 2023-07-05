@@ -17,14 +17,18 @@ module.exports = {
   fn() {
     payloads.forEach(payload => {
       // Parse the source map first...
-      const smc = new sourceMap.SourceMapConsumer(payload);
-      // ...then serialize the parsed source map to a String.
-      const smg = sourceMap.SourceMapGenerator.fromSourceMap(smc);
+      sourceMap.SourceMapConsumer.with(payload, null, function(smc) {
+        // ...then serialize the parsed source map to a String.
+        const smg = sourceMap.SourceMapGenerator.fromSourceMap(smc);
 
-      // Create a SourceNode from the generated code and a SourceMapConsumer.
-      const fswsm = sourceMap.SourceNode.fromStringWithSourceMap(payload, smc);
+        // Create a SourceNode from the generated code and a SourceMapConsumer.
+        const fswsm = sourceMap.SourceNode.fromStringWithSourceMap(
+          payload,
+          smc
+        );
 
-      return [smg.toString(), fswsm.toString()];
+        return [smg.toString(), fswsm.toString()];
+      });
     });
   }
 };

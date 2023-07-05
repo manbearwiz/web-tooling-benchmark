@@ -12,11 +12,15 @@ function getTarget(env) {
   return env && targetList.has(env.only) && env.only;
 }
 
-module.exports = env => [
+module.exports = (env) => [
   {
     mode: "development",
     module: {
       rules: [
+        {
+          resourceQuery: /raw/,
+          type: 'asset/source',
+        },
         {
           test: /\.mjs$/,
           include: /node_modules/,
@@ -28,14 +32,19 @@ module.exports = env => [
     entry: "./cli.js",
     output: {
       filename: "cli.js",
-      path: path.resolve("dist")
     },
     bail: true,
     resolve: {
       alias: {
         fs: require.resolve("./src/vfs"),
-        module: require.resolve("./src/mocks/dummy")
-      }
+        module: require.resolve("./src/mocks/dummy"),
+        os: require.resolve("os-browserify/browser"),
+      },
+      fallback: {
+        path: require.resolve("path-browserify"),
+        stream: require.resolve("stream-browserify"),
+        buffer: require.resolve("buffer"),
+      },
     },
     plugins: [
       new webpack.BannerPlugin({
@@ -45,17 +54,21 @@ module.exports = env => [
           "if (typeof console === 'undefined') {\n" +
           "  console = {log: print};\n" +
           "}",
-        raw: true
+        raw: true,
       }),
       new webpack.DefinePlugin({
-        ONLY: JSON.stringify(getTarget(env))
-      })
-    ]
+        ONLY: JSON.stringify(getTarget(env)),
+      }),
+    ],
   },
   {
     mode: "development",
     module: {
       rules: [
+        {
+          resourceQuery: /raw/,
+          type: 'asset/source',
+        },
         {
           test: /\.mjs$/,
           include: /node_modules/,
@@ -67,34 +80,40 @@ module.exports = env => [
     entry: "./bootstrap.js",
     output: {
       filename: "browser.js",
-      path: path.resolve("dist")
     },
     bail: true,
     resolve: {
       alias: {
         define: require.resolve("./src/mocks/dummy"),
         fs: require.resolve("./src/vfs"),
-        module: require.resolve("./src/mocks/dummy")
-      }
+        module: require.resolve("./src/mocks/dummy"),
+        os: require.resolve("os-browserify/browser"),
+
+      },
+      fallback: {
+        path: require.resolve("path-browserify"),
+        stream: require.resolve("stream-browserify"),
+        buffer: require.resolve("buffer"),
+      },
     },
     plugins: [
       new CopyWebpackPlugin({
-        patterns: [{ from: "style.css" }, { from: "Logo.png" }]
+        patterns: [{ from: "style.css" }, { from: "Logo.png" }],
       }),
       new webpack.BannerPlugin({
         banner:
           "// Work-around for the weird JaegerMonkey\n" +
           "// work-around inside benchmark.js.\n" +
           "const define = { amd: {} };\n",
-        raw: true
+        raw: true,
       }),
       new HtmlWebpackPlugin({
         template: "./index.html",
-        inject: "head"
+        inject: "head",
       }),
       new webpack.DefinePlugin({
-        ONLY: JSON.stringify(getTarget(env))
-      })
-    ]
-  }
+        ONLY: JSON.stringify(getTarget(env)),
+      }),
+    ],
+  },
 ];

@@ -57,7 +57,7 @@
     "memfs": "^4.2.0",
     "postcss": "7.0.39",
     "postcss-nested": "4.2.3",
-    "prepack": "0.2.25",
+    "prepack": "0.2.54",
     "prettier": "1.9.2",
     "source-map": "0.6.1",
     "string-align": "^0.2.0",

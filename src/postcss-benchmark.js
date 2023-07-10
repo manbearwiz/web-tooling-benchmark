@@ -9,7 +9,7 @@ const autoprefixer = require("autoprefixer");
 
 const nestedRules = require("./mocks/nested-rules");
 
-const cleaner = postcss([autoprefixer({ add: false, browsers: [] })]);
+const cleaner = postcss([autoprefixer({ add: false })]);
 const processor = postcss([autoprefixer, nested]);
 
 const payloads = [

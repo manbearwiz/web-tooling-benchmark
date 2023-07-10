@@ -29,8 +29,8 @@
     ]
   },
   "browserslist": [
-    "Chrome 50",
-    "Firefox 50"
+    "defaults and supports es6-module",
+    "maintained node versions"
   ],
   "author": {
     "name": "Benedikt Meurer",
@@ -43,7 +43,7 @@
     "@babel/standalone": "7.22.8",
     "acorn": "8.9.0",
     "acorn-walk": "8.2.0",
-    "autoprefixer": "8.6.5",
+    "autoprefixer": "10.4.14",
     "babel-minify": "0.5.2",
     "benchmark": "^2.1.4",
     "buble": "0.20.0",
@@ -55,8 +55,8 @@
     "jshint": "2.13.6",
     "lebab": "3.2.1",
     "memfs": "^4.2.0",
-    "postcss": "7.0.39",
-    "postcss-nested": "4.2.3",
+    "postcss": "8.4.25",
+    "postcss-nested": "6.0.1",
     "prepack": "0.2.54",
     "prettier": "1.9.2",
     "source-map": "0.6.1",

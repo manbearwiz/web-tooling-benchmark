@@ -44,7 +44,7 @@
     "acorn": "8.9.0",
     "acorn-walk": "8.2.0",
     "autoprefixer": "8.6.5",
-    "babel-minify": "0.4.3",
+    "babel-minify": "0.5.2",
     "benchmark": "^2.1.4",
     "buble": "0.20.0",
     "chai": "4.3.7",

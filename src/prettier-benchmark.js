@@ -5,6 +5,14 @@
 const fs = require("fs");
 const prettier = require("prettier");
 
+const pluginBabel = require('prettier/parser-babel')
+const pluginHtml = require('prettier/parser-html')
+
+const parserOptions =  {
+  parser: "babel",
+  plugins: [pluginBabel, pluginHtml],
+};
+
 const payloads = [
   {
     name: "preact-8.2.5.js",
@@ -35,7 +43,7 @@ module.exports = {
   name: "prettier",
   fn() {
     return payloads.map(({ payload, options }) =>
-      prettier.format(payload, options)
+      prettier.format(payload, {...parserOptions, ...options})
     );
   }
 };

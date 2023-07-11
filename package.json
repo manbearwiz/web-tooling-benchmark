@@ -29,8 +29,7 @@
     ]
   },
   "browserslist": [
-    "defaults and supports es6-module",
-    "maintained node versions"
+    "defaults"
   ],
   "author": {
     "name": "Benedikt Meurer",
@@ -58,7 +57,7 @@
     "postcss": "8.4.25",
     "postcss-nested": "6.0.1",
     "prepack": "0.2.54",
-    "prettier": "1.9.2",
+    "prettier": "2.8.8",
     "source-map": "0.6.1",
     "string-align": "^0.2.0",
     "terser": "5.18.2",
@@ -66,17 +65,19 @@
     "uglify-js": "3.17.4"
   },
   "devDependencies": {
-    "copy-webpack-plugin": "^6.4.1",
-    "html-webpack-plugin": "^4.5.2",
+    "buffer": "^6.0.3",
+    "copy-webpack-plugin": "^11.0.0",
+    "html-webpack-plugin": "^5.5.3",
     "husky": "^8.0.0",
     "jest": "^29.6.1",
     "lint-staged": "^13.2.3",
     "node-libs-browser": "^2.2.1",
     "os-browserify": "^0.3.0",
-    "raw-loader": "github:bmeurer/raw-loader#escape",
+    "path-browserify": "^1.0.1",
     "semver": "^7.5.3",
+    "stream-browserify": "^3.0.0",
     "web-tooling-benchmark-generator": "^1.0.2",
-    "webpack": "^4.46.0",
-    "webpack-cli": "^4.10.0"
+    "webpack": "^5.88.1",
+    "webpack-cli": "^5.1.4"
   }
 }

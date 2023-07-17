@@ -9,7 +9,7 @@
     "build:uglify-js-bundled": "node node_modules/uglify-js/bin/uglifyjs -b preamble=\"'const UglifyJS = module.exports = {};'\" --self > build/uglify-js-bundled.js",
     "build": "NODE_OPTIONS=--openssl-legacy-provider webpack",
     "postinstall": "npm run build:uglify-js-bundled && npm run build",
-    "test": "jest",
+    "test": "vitest run --globals",
     "update-lock": "npm install --package-lock",
     "new-benchmark": "wtb-generate",
     "prepare": "husky install"
@@ -68,13 +68,13 @@
     "copy-webpack-plugin": "^11.0.0",
     "html-webpack-plugin": "^5.5.3",
     "husky": "^8.0.0",
-    "jest": "^29.6.1",
     "lint-staged": "^13.2.3",
     "node-libs-browser": "^2.2.1",
     "os-browserify": "^0.3.0",
     "path-browserify": "^1.0.1",
     "semver": "^7.5.3",
     "stream-browserify": "^3.0.0",
+    "vitest": "^0.33.0",
     "web-tooling-benchmark-generator": "^1.0.2",
     "webpack": "^5.88.1",
     "webpack-cli": "^5.1.4"

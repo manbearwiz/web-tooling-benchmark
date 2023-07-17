@@ -7,7 +7,7 @@
   "scripts": {
     "benchmark": "node dist/cli.js",
     "build:uglify-js-bundled": "node node_modules/uglify-js/bin/uglifyjs -b preamble=\"'const UglifyJS = module.exports = {};'\" --self > build/uglify-js-bundled.js",
-    "build": "NODE_OPTIONS=--openssl-legacy-provider webpack",
+    "build": "webpack",
     "postinstall": "npm run build:uglify-js-bundled && npm run build",
     "test": "vitest run --globals",
     "update-lock": "npm install --package-lock",

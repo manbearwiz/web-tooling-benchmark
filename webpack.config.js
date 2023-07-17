@@ -19,14 +19,14 @@ module.exports = (env) => [
       rules: [
         {
           resourceQuery: /raw/,
-          type: 'asset/source',
+          type: "asset/source",
         },
         {
           test: /\.mjs$/,
           include: /node_modules/,
-          type: "javascript/auto"
-        }
-      ]
+          type: "javascript/auto",
+        },
+      ],
     },
     context: path.resolve("src"),
     entry: "./cli.js",
@@ -47,6 +47,10 @@ module.exports = (env) => [
       },
     },
     plugins: [
+      new webpack.ProvidePlugin({
+        process: "process/browser",
+        Buffer: ["buffer", "Buffer"],
+      }),
       new webpack.BannerPlugin({
         banner:
           "// Required for JavaScript engine shells.\n" +
@@ -67,14 +71,14 @@ module.exports = (env) => [
       rules: [
         {
           resourceQuery: /raw/,
-          type: 'asset/source',
+          type: "asset/source",
         },
         {
           test: /\.mjs$/,
           include: /node_modules/,
-          type: "javascript/auto"
-        }
-      ]
+          type: "javascript/auto",
+        },
+      ],
     },
     context: path.resolve("src"),
     entry: "./bootstrap.js",
@@ -88,7 +92,6 @@ module.exports = (env) => [
         fs: require.resolve("./src/vfs"),
         module: require.resolve("./src/mocks/dummy"),
         os: require.resolve("os-browserify/browser"),
-
       },
       fallback: {
         path: require.resolve("path-browserify"),
@@ -97,6 +100,10 @@ module.exports = (env) => [
       },
     },
     plugins: [
+      new webpack.ProvidePlugin({
+        process: "process/browser",
+        Buffer: ["buffer", "Buffer"],
+      }),
       new CopyWebpackPlugin({
         patterns: [{ from: "style.css" }, { from: "Logo.png" }],
       }),

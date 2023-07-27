@@ -4,4 +4,5 @@
 
 const prettierBenchmark = require("./prettier-benchmark");
 
-it("prettier-benchmark runs to completion", () => void prettierBenchmark.fn());
+it("prettier-benchmark runs to completion", () =>
+  void prettierBenchmark.fn({ resolve: () => {} }));

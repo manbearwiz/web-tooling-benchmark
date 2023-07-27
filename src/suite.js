@@ -12,15 +12,13 @@ const getTarget = require("./cli-flags-helper").getTarget;
 // https://github.com/v8/web-tooling-benchmark/issues/6 for details.
 const defaultOptions = {
   maxTime: 0,
-  minSamples: 20
+  minSamples: 20,
 };
 
 const suite = new Benchmark.Suite();
 
-getTarget().forEach(target => {
-  suite.add(
-    Object.assign({}, require(`./${target}-benchmark`), defaultOptions)
-  );
+getTarget().forEach((target) => {
+  suite.add({ ...require(`./${target}-benchmark`), ...defaultOptions });
 });
 
 module.exports = suite;

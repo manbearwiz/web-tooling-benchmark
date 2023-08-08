@@ -4,4 +4,6 @@
 
 import { fn } from "./acorn-benchmark";
 
+vi.mock('fs')
+
 it("acorn-benchmark runs to completion", () => void fn());

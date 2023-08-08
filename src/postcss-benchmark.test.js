@@ -4,4 +4,6 @@
 
 import { fn } from "./postcss-benchmark";
 
+vi.mock('fs')
+
 it("postcss-benchmark runs to completion", () => void fn());

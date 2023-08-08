@@ -6,10 +6,10 @@ import { tokenize, parse } from "esprima";
 import fs from "fs";
 
 const payloads = [
-  "backbone-1.1.0.js",
-  "jquery-3.2.1.js",
-  "mootools-core-1.6.0.js",
-  "underscore-1.8.3.js",
+  "backbone.js",
+  "jquery.js",
+  "mootools-core.js",
+  "underscore.js",
 ].map((name) => fs.readFileSync(`third_party/${name}`, "utf8"));
 
 export const name = "esprima";

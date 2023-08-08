@@ -4,4 +4,6 @@
 
 import { fn } from "./babylon-benchmark";
 
+vi.mock('fs')
+
 it("babylon-benchmark runs to completion", () => void fn());

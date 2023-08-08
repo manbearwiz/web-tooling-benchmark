@@ -4,4 +4,6 @@
 
 import { fn } from "./lebab-benchmark";
 
+vi.mock('fs')
+
 it("lebab-benchmark runs to completion", () => void fn());

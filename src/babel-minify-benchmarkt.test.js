@@ -4,4 +4,6 @@
 
 import { fn } from "./babel-minify-benchmark";
 
+vi.mock('fs')
+
 it("babel-minify-benchmark runs to completion", () => void fn());

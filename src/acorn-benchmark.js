@@ -8,23 +8,23 @@ import { full } from "acorn-walk";
 
 const payloads = [
   {
-    name: "backbone-1.1.0.js",
+    name: "backbone.js",
     options: { ecmaVersion: 5, sourceType: "script" },
   },
   {
-    name: "jquery-3.2.1.js",
+    name: "jquery.js",
     options: { ecmaVersion: 5, sourceType: "script" },
   },
   {
-    name: "lodash.core-4.17.4.js",
+    name: "lodash.core.js",
     options: { ecmaVersion: 5, sourceType: "script" },
   },
   {
-    name: "preact-8.2.5.js",
+    name: "preact.js",
     options: { ecmaVersion: 5, sourceType: "script" },
   },
   {
-    name: "redux.min-3.7.2.js",
+    name: "redux.min.js",
     options: { ecmaVersion: 5, sourceType: "script" },
   },
   {
@@ -32,11 +32,11 @@ const payloads = [
     options: { ecmaVersion: 6, sourceType: "script" },
   },
   {
-    name: "underscore-1.8.3.js",
+    name: "underscore.js",
     options: { ecmaVersion: 5, sourceType: "script" },
   },
   {
-    name: "vue.runtime.esm-nobuble-2.4.4.js",
+    name: "vue.runtime.esm-nobuble.js",
     options: { ecmaVersion: 7, sourceType: "module" },
   },
 ].map(({ name, options }) => ({

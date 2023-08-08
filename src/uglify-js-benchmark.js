@@ -7,7 +7,7 @@ import fs from "fs";
 
 const payloads = [
   {
-    name: "lodash.core-4.17.4.js",
+    name: "lodash.core.js",
     options: { compress: { passes: 1 } },
   },
 ].map(({ name, options }) => ({

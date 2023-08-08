@@ -7,7 +7,7 @@ import { transform } from "lebab";
 
 const payloads = [
   {
-    name: "preact-8.2.5.js",
+    name: "preact.js",
     options: [
       "arg-rest",
       "arg-spread",

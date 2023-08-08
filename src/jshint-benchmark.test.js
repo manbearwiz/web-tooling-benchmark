@@ -4,4 +4,6 @@
 
 import { fn } from "./jshint-benchmark";
 
+vi.mock('fs')
+
 it("jshint-benchmark runs to completion", () => void fn());

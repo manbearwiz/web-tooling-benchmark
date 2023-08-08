@@ -4,4 +4,6 @@
 
 import { fn } from "./uglify-js-benchmark";
 
+vi.mock('fs')
+
 it("uglify-js-benchmark runs to completion", () => void fn());

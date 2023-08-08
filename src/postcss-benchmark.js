@@ -13,9 +13,9 @@ const cleaner = postcss([autoprefixer({ add: false })]);
 const processor = postcss([autoprefixer, nested]);
 
 const payloads = [
-  "bootstrap-4.0.0.css",
-  "foundation-6.4.2.css",
-  "angular-material-1.1.8.css",
+  "bootstrap.css",
+  "foundation.css",
+  "angular-material.css",
 ].map((name) => {
   // Clean prefixes.
   const source = fs.readFileSync(`third_party/${name}`, "utf8");

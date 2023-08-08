@@ -2,6 +2,6 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-const espreeBenchmark = require("./espree-benchmark");
+import { fn } from "./espree-benchmark";
 
-it("espree-benchmark runs to completion", () => void espreeBenchmark.fn());
+it("espree-benchmark runs to completion", () => void fn());

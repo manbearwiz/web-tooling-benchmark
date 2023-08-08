@@ -2,7 +2,6 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-const babelMinifyBenchmark = require("./babel-minify-benchmark");
+import { fn } from "./babel-minify-benchmark";
 
-it("babel-minify-benchmark runs to completion", () =>
-  void babelMinifyBenchmark.fn());
+it("babel-minify-benchmark runs to completion", () => void fn());

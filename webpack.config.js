@@ -44,6 +44,7 @@ module.exports = (env) => [
         path: require.resolve("path-browserify"),
         stream: require.resolve("stream-browserify"),
         buffer: require.resolve("buffer"),
+        "process/browser": require.resolve("process/browser"),
       },
     },
     plugins: [
@@ -97,6 +98,7 @@ module.exports = (env) => [
         path: require.resolve("path-browserify"),
         stream: require.resolve("stream-browserify"),
         buffer: require.resolve("buffer"),
+        "process/browser": require.resolve("process/browser"),
       },
     },
     plugins: [

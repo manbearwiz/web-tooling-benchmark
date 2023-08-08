@@ -2,9 +2,9 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-const gmean = require("compute-gmean");
-const packageJson = require("../package.json");
-const suite = require("./suite");
+import gmean from "compute-gmean";
+import packageJson from "../package.json";
+import suite from "./suite";
 
 console.log(`Running Web Tooling Benchmark v${packageJson.version}…`);
 console.log("-------------------------------------");

@@ -2,30 +2,21 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-const fs = require("fs");
-const postcss = require("postcss");
-const nested = require("postcss-nested");
-const autoprefixer = require("autoprefixer");
+import fs from "fs";
+import postcss from "postcss";
+import nested from "postcss-nested";
+import autoprefixer from "autoprefixer";
 
-const nestedRules = require("./mocks/nested-rules");
+import nestedRules from "./mocks/nested-rules";
 
 const cleaner = postcss([autoprefixer({ add: false })]);
 const processor = postcss([autoprefixer, nested]);
 
 const payloads = [
-  {
-    name: "bootstrap-4.0.0.css",
-    options: { from: `third_party/${this.name}`, map: false }
-  },
-  {
-    name: "foundation-6.4.2.css",
-    options: { from: `third_party/${this.name}`, map: false }
-  },
-  {
-    name: "angular-material-1.1.8.css",
-    options: { from: `third_party/${this.name}`, map: false }
-  }
-].map(({ name, options }) => {
+  "bootstrap-4.0.0.css",
+  "foundation-6.4.2.css",
+  "angular-material-1.1.8.css",
+].map((name) => {
   // Clean prefixes.
   const source = fs.readFileSync(`third_party/${name}`, "utf8");
   // Add some nested rules.
@@ -33,15 +24,16 @@ const payloads = [
 
   return {
     payload: css,
-    options
+    options: {
+      from: `third_party/${name}`,
+      map: false,
+    },
   };
 });
 
-module.exports = {
-  name: "postcss",
-  fn() {
-    return payloads.map(
-      ({ payload, options }) => processor.process(payload, options).css
-    );
-  }
-};
+export const name = "postcss";
+export function fn() {
+  return payloads.map(
+    ({ payload, options }) => processor.process(payload, options).css,
+  );
+}

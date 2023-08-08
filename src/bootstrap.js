@@ -2,9 +2,9 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-const gmean = require("compute-gmean");
-const package = require("../package.json");
-const suite = require("./suite");
+import gmean from "compute-gmean";
+import packageJSON from "../package.json";
+import suite from "./suite";
 
 function displayStatusMessage(message) {
   const element = document.getElementById("status");
@@ -28,7 +28,7 @@ function reset() {
   resultSummaryDiv.textContent = "";
 
   const benchmarks = [];
-  suite.forEach(benchmark => benchmarks.push(benchmark));
+  suite.forEach((benchmark) => benchmarks.push(benchmark));
 
   const numColumns = 2;
   const columnHeight = Math.ceil((benchmarks.length + 1) / numColumns);
@@ -46,12 +46,8 @@ function reset() {
       } else {
         const benchmark = benchmarks[index];
         text += `<td class="benchmark-name">`;
-        text += `<a href="https://github.com/v8/web-tooling-benchmark/blob/master/docs/in-depth.md#${
-          benchmark.name
-        }" target="_blank">${benchmark.name}</a></td>`;
-        text += `<td class="result" id="results-cell-${
-          benchmark.name
-        }">&mdash;</td>`;
+        text += `<a href="https://github.com/v8/web-tooling-benchmark/blob/master/docs/in-depth.md#${benchmark.name}" target="_blank">${benchmark.name}</a></td>`;
+        text += `<td class="result" id="results-cell-${benchmark.name}">&mdash;</td>`;
       }
     }
     text += "</tr>";
@@ -62,10 +58,10 @@ function reset() {
 function initialize() {
   reset();
 
-  document.title = `Web Tooling Benchmark v${package.version}`;
+  document.title = `Web Tooling Benchmark v${packageJSON.version}`;
 
   const versionDiv = document.getElementById("version");
-  versionDiv.innerHTML = `v${package.version}`;
+  versionDiv.innerHTML = `v${packageJSON.version}`;
 
   const statusDiv = document.getElementById("status");
   statusDiv.innerHTML = `<a href="javascript:void(0);">Start test</a>`;
@@ -93,45 +89,45 @@ window.automated = {
   // The result array of {name, score} pairs.
   results: [],
   // The function that starts the run.
-  start
+  start,
 };
 
-suite.forEach(benchmark => {
-  benchmark.on("start", event => {
+suite.forEach((benchmark) => {
+  benchmark.on("start", (event) => {
     if (suite.aborted) return;
     displayResultMessage(
       benchmark.name,
       "<em>Running...</em>",
-      "highlighted-result"
+      "highlighted-result",
     );
     displayStatusMessage(`Running iteration 1 of ${benchmark.name}...`);
   });
-  benchmark.on("cycle", event => {
+  benchmark.on("cycle", (event) => {
     if (suite.aborted) return;
     const iteration = benchmark.stats.sample.length + 1;
     displayStatusMessage(
-      `Running iteration ${iteration} of ${benchmark.name}...`
+      `Running iteration ${iteration} of ${benchmark.name}...`,
     );
   });
-  benchmark.on("complete", event => {
+  benchmark.on("complete", (event) => {
     if (suite.aborted) return;
     displayResultMessage(
       benchmark.name,
       `${benchmark.hz.toFixed(2)}`,
-      "result"
+      "result",
     );
     const iterations = benchmark.stats.sample.length;
     displayStatusMessage(
-      `Ran ${iterations} iterations of ${benchmark.name}...`
+      `Ran ${iterations} iterations of ${benchmark.name}...`,
     );
   });
 });
 
-suite.on("complete", event => {
+suite.on("complete", (event) => {
   window.automated.completed = true;
   if (suite.aborted) return;
-  const hz = gmean(suite.map(benchmark => benchmark.hz));
-  window.automated.results = suite.map(benchmark => {
+  const hz = gmean(suite.map((benchmark) => benchmark.hz));
+  window.automated.results = suite.map((benchmark) => {
     return { name: benchmark.name, score: benchmark.hz };
   });
   window.automated.results.push({ name: "total", score: hz });
@@ -143,18 +139,16 @@ suite.on("complete", event => {
 
   const resultSummaryDiv = document.getElementById("result-summary");
   resultSummaryDiv.innerHTML = `<label>Runs/Sec</label><br><span class="score">${hz.toFixed(
-    2
+    2,
   )}</span>`;
 });
 
-suite.on("error", event => {
+suite.on("error", (event) => {
   window.automated.completed = true;
   const benchmark = event.target;
   const error = benchmark.error;
   const name = benchmark.name;
-  document.body.innerHTML = `<h1>ERROR</h1><p>Encountered errors during execution of ${name} test. Refusing to run a partial benchmark suite.</p><pre>${
-    error.stack
-  }</pre>`;
+  document.body.innerHTML = `<h1>ERROR</h1><p>Encountered errors during execution of ${name} test. Refusing to run a partial benchmark suite.</p><pre>${error.stack}</pre>`;
   console.error(error);
   suite.abort();
 });

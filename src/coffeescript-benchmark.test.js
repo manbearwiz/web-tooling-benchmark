@@ -2,7 +2,6 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-const coffeescriptBenchmark = require("./coffeescript-benchmark");
+import { fn } from "./coffeescript-benchmark";
 
-it("coffeescript-benchmark runs to completion", () =>
-  void coffeescriptBenchmark.fn());
+it("coffeescript-benchmark runs to completion", () => void fn());

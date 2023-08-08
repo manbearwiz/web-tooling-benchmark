@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-const Benchmark = require("benchmark");
-const getTarget = require("./cli-flags-helper").getTarget;
+import { Suite } from "benchmark";
+import { getTarget } from "./cli-flags-helper";
 
 // We need to run deterministically, so we set 'maxTime' to 0, which
 // disables the variable iteration count feature of benchmark.js,
@@ -15,10 +15,10 @@ const defaultOptions = {
   minSamples: 20,
 };
 
-const suite = new Benchmark.Suite();
+const suite = new Suite();
 
 getTarget().forEach((target) => {
   suite.add({ ...require(`./${target}-benchmark`), ...defaultOptions });
 });
 
-module.exports = suite;
+export default suite;

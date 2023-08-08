@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-const prettierBenchmark = require("./prettier-benchmark");
+import { fn } from "./prettier-benchmark";
 
 it("prettier-benchmark runs to completion", () =>
-  void prettierBenchmark.fn({ resolve: () => {} }));
+  void fn({ resolve: () => {} }));

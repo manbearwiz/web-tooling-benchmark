@@ -2,6 +2,6 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-const acornBenchmark = require("./acorn-benchmark");
+import { fn } from "./acorn-benchmark";
 
-it("acorn-benchmark runs to completion", () => void acornBenchmark.fn());
+it("acorn-benchmark runs to completion", () => void fn());

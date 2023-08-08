@@ -2,6 +2,6 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-const lebabBenchmark = require("./lebab-benchmark");
+import { fn } from "./lebab-benchmark";
 
-it("lebab-benchmark runs to completion", () => void lebabBenchmark.fn());
+it("lebab-benchmark runs to completion", () => void fn());

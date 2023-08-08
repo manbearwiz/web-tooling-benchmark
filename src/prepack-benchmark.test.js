@@ -2,6 +2,6 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-const prepackBenchmark = require("./prepack-benchmark");
+import { fn } from "./prepack-benchmark";
 
-it("prepack-benchmark runs to completion", () => void prepackBenchmark.fn());
+it("prepack-benchmark runs to completion", () => void fn());

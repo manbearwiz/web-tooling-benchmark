@@ -2,6 +2,6 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-const terserBenchmark = require("./terser-benchmark");
+import { fn } from "./terser-benchmark";
 
-it("terser-benchmark runs to completion", () => void terserBenchmark.fn());
+it("terser-benchmark runs to completion", () => void fn());

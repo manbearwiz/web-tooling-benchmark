@@ -2,6 +2,6 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-const bubleBenchmark = require("./buble-benchmark");
+import { fn } from "./buble-benchmark";
 
-it("buble-benchmark runs to completion", () => void bubleBenchmark.fn());
+it("buble-benchmark runs to completion", () => void fn());

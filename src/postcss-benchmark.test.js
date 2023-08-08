@@ -2,6 +2,6 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-const postcssBenchmark = require("./postcss-benchmark");
+import { fn } from "./postcss-benchmark";
 
-it("postcss-benchmark runs to completion", () => void postcssBenchmark.fn());
+it("postcss-benchmark runs to completion", () => void fn());

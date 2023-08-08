@@ -2,6 +2,6 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-const esprimaBenchmark = require("./esprima-benchmark");
+import { fn } from "./esprima-benchmark";
 
-it("esprima-benchmark runs to completion", () => void esprimaBenchmark.fn());
+it("esprima-benchmark runs to completion", () => void fn());

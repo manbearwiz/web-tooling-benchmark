@@ -2,26 +2,24 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-const Babel = require("@babel/standalone");
-const babylon = require("@babel/parser");
-const fs = require("fs");
+import { transformFromAst } from "@babel/standalone";
+import { parse } from "@babel/parser";
+import fs from "fs";
 
 const payloads = [
   {
     name: "vue.runtime.esm-nobuble-2.4.4.js",
-    options: { presets: ["es2015"], sourceType: "module" }
-  }
+    options: { presets: ["es2015"], sourceType: "module" },
+  },
 ].map(({ name, options }) => {
   const code = fs.readFileSync(`third_party/${name}`, "utf8");
-  const ast = babylon.parse(code, options);
+  const ast = parse(code, options);
   return { ast, code, options };
 });
 
-module.exports = {
-  name: "babel",
-  fn() {
-    return payloads.map(({ ast, code, options }) =>
-      Babel.transformFromAst(ast, code, options)
-    );
-  }
-};
+export const name = "babel";
+export function fn() {
+  return payloads.map(({ ast, code, options }) =>
+    transformFromAst(ast, code, options),
+  );
+}

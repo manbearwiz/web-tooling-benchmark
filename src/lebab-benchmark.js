@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-const fs = require("fs");
-const lebab = require("lebab");
+import fs from "fs";
+import { transform } from "lebab";
 
 const payloads = [
   {
@@ -18,19 +18,15 @@ const payloads = [
       "template",
       "includes",
       "obj-method",
-      "obj-shorthand"
-    ]
-  }
+      "obj-shorthand",
+    ],
+  },
 ].map(({ name, options }) => ({
   payload: fs.readFileSync(`third_party/${name}`, "utf8"),
-  options
+  options,
 }));
 
-module.exports = {
-  name: "lebab",
-  fn() {
-    return payloads.map(({ payload, options }) =>
-      lebab.transform(payload, options)
-    );
-  }
-};
+export const name = "lebab";
+export function fn() {
+  return payloads.map(({ payload, options }) => transform(payload, options));
+}

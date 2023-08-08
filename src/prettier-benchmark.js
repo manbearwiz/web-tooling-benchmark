@@ -2,12 +2,12 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-const fs = require("fs");
-const prettier = require("prettier/standalone");
+import fs from "fs";
+import { format } from "prettier/standalone";
 
-const pluginBabel = require("prettier/plugins/babel");
-const pluginHtml = require("prettier/plugins/html");
-const pluginEstree = require("prettier/plugins/estree");
+import pluginBabel from "prettier/plugins/babel";
+import pluginHtml from "prettier/plugins/html";
+import pluginEstree from "prettier/plugins/estree";
 
 const parserOptions = {
   parser: "babel",
@@ -40,15 +40,13 @@ const payloads = [
   options,
 }));
 
-module.exports = {
-  name: "prettier",
-  defer: true,
-  async fn(deferred) {
-    await Promise.all(
-      payloads.map(({ payload, options }) =>
-        prettier.format(payload, { ...parserOptions, ...options }),
-      ),
-    );
-    deferred.resolve();
-  },
-};
+export const name = "prettier";
+export const defer = true;
+export async function fn(deferred) {
+  await Promise.all(
+    payloads.map(({ payload, options }) =>
+      format(payload, { ...parserOptions, ...options }),
+    ),
+  );
+  deferred.resolve();
+}

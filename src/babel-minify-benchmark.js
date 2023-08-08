@@ -2,24 +2,20 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-const babelMinify = require("babel-minify");
-const fs = require("fs");
+import babelMinify from "babel-minify";
+import fs from "fs";
 
 const payloads = [
   {
     name: "speedometer-es2015-test-2.0.js",
-    options: {}
-  }
+    options: {},
+  },
 ].map(({ name, options }) => ({
   payload: fs.readFileSync(`third_party/${name}`, "utf8"),
-  options
+  options,
 }));
 
-module.exports = {
-  name: "babel-minify",
-  fn() {
-    return payloads.map(({ payload, options }) =>
-      babelMinify(payload, options)
-    );
-  }
-};
+export const name = "babel-minify";
+export function fn() {
+  return payloads.map(({ payload, options }) => babelMinify(payload, options));
+}

@@ -2,6 +2,6 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-const uglifyJsBenchmark = require("./uglify-js-benchmark");
+import { fn } from "./uglify-js-benchmark";
 
-it("uglify-js-benchmark runs to completion", () => void uglifyJsBenchmark.fn());
+it("uglify-js-benchmark runs to completion", () => void fn());

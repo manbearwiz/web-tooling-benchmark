@@ -2,7 +2,6 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-const sourceMapBenchmark = require("./source-map-benchmark");
+import { fn } from "./source-map-benchmark";
 
-it("source-map-benchmark runs to completion", () =>
-  void sourceMapBenchmark.fn());
+it("source-map-benchmark runs to completion", () => void fn());

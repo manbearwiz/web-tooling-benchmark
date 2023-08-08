@@ -2,6 +2,6 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-const babelBenchmark = require("./babel-benchmark");
+import { fn } from "./babel-benchmark";
 
-it("babel-benchmark runs to completion", () => void babelBenchmark.fn());
+it("babel-benchmark runs to completion", () => void fn());

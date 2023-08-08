@@ -2,7 +2,6 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-const typescriptBenchmark = require("./typescript-benchmark");
+import { fn } from "./typescript-benchmark";
 
-it("typescript-benchmark runs to completion", () =>
-  void typescriptBenchmark.fn());
+it("typescript-benchmark runs to completion", () => void fn());

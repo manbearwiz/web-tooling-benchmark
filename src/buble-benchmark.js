@@ -2,24 +2,20 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-const buble = require("buble");
-const fs = require("fs");
+import { transform } from "buble";
+import fs from "fs";
 
 const payloads = [
   {
     name: "vue.runtime.esm-nobuble-2.4.4.js",
-    options: {}
-  }
+    options: {},
+  },
 ].map(({ name, options }) => ({
   payload: fs.readFileSync(`third_party/${name}`, "utf8"),
-  options: { transforms: { modules: false } }
+  options: { transforms: { modules: false } },
 }));
 
-module.exports = {
-  name: "buble",
-  fn() {
-    return payloads.map(({ payload, options }) =>
-      buble.transform(payload, options)
-    );
-  }
-};
+export const name = "buble";
+export function fn() {
+  return payloads.map(({ payload, options }) => transform(payload, options));
+}

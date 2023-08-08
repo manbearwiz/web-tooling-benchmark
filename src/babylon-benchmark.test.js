@@ -2,6 +2,6 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-const babylonBenchmark = require("./babylon-benchmark");
+import { fn } from "./babylon-benchmark";
 
-it("babylon-benchmark runs to completion", () => void babylonBenchmark.fn());
+it("babylon-benchmark runs to completion", () => void fn());

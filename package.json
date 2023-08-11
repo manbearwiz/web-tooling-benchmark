@@ -7,8 +7,9 @@
   "scripts": {
     "benchmark": "node dist/cli.js",
     "build:uglify-js-bundled": "node node_modules/uglify-js/bin/uglifyjs -b preamble=\"'const UglifyJS = module.exports = {};'\" --self > build/uglify-js-bundled.js",
+    "build:shared-deps": "shared-deps build shared-deps.conf.mjs --clean",
     "build": "webpack",
-    "postinstall": "npm run build:uglify-js-bundled && npm run build",
+    "postinstall": "npm run build:uglify-js-bundled && npm run build:shared-deps && npm run build",
     "test": "vitest run --globals",
     "update-lock": "npm install --package-lock",
     "new-benchmark": "wtb-generate",
@@ -72,6 +73,7 @@
     "node-libs-browser": "^2.2.1",
     "os-browserify": "^0.3.0",
     "path-browserify": "^1.0.1",
+    "self-hosted-shared-dependencies": "^2.0.1",
     "semver": "^7.5.3",
     "stream-browserify": "^3.0.0",
     "vitest": "^0.33.0",

@@ -4,5 +4,7 @@
 
 import { fn } from "./prettier-benchmark";
 
+vi.mock('fs')
+
 it("prettier-benchmark runs to completion", () =>
   void fn({ resolve: () => {} }));

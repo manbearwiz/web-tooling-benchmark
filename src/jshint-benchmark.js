@@ -6,9 +6,9 @@ import fs from "fs";
 import { JSHINT } from "jshint";
 
 const inputs = [
-  "lodash.core-4.17.4.js",
-  "preact-8.2.5.js",
-  "underscore-1.8.3.js",
+  "lodash.core.js",
+  "preact.js",
+  "underscore.js",
 ].map((name) => fs.readFileSync(`third_party/${name}`, "utf8"));
 
 export const name = "jshint";

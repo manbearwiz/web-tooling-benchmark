@@ -7,19 +7,19 @@ import fs from "fs";
 
 const payloads = [
   {
-    name: "jquery-3.2.1.js",
+    name: "jquery.js",
     options: { sourceType: "script" },
   },
   {
-    name: "lodash.core-4.17.4.js",
+    name: "lodash.core.js",
     options: { sourceType: "script" },
   },
   {
-    name: "preact-8.2.5.js",
+    name: "preact.js",
     options: { sourceType: "script" },
   },
   {
-    name: "redux.min-3.7.2.js",
+    name: "redux.min.js",
     options: { sourceType: "script" },
   },
   {
@@ -39,11 +39,11 @@ const payloads = [
     options: { sourceType: "script", plugins: ["jsx"] },
   },
   {
-    name: "underscore-1.8.3.js",
+    name: "underscore.js",
     options: { sourceType: "script" },
   },
   {
-    name: "vue.runtime.esm-nobuble-2.4.4.js",
+    name: "vue.runtime.esm-nobuble.js",
     options: { sourceType: "module" },
   },
 ].map(({ name, options }) => ({

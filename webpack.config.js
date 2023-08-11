@@ -36,7 +36,7 @@ module.exports = (env) => [
     bail: true,
     resolve: {
       alias: {
-        fs: require.resolve("./src/vfs"),
+        fs: require.resolve("./__mocks__/fs"),
         module: require.resolve("./src/mocks/dummy"),
         os: require.resolve("os-browserify/browser"),
       },
@@ -90,7 +90,7 @@ module.exports = (env) => [
     resolve: {
       alias: {
         define: require.resolve("./src/mocks/dummy"),
-        fs: require.resolve("./src/vfs"),
+        fs: require.resolve("./__mocks__/fs"),
         module: require.resolve("./src/mocks/dummy"),
         os: require.resolve("os-browserify/browser"),
       },

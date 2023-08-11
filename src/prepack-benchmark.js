@@ -6,8 +6,8 @@ import fs from "fs";
 import { prepackSources } from "prepack";
 
 const sourceFiles = [
-  "third_party/preact-8.2.5.js",
-  "third_party/redux.min-3.7.2.js",
+  "third_party/preact.js",
+  "third_party/redux.min.js",
 ].map((filePath) => ({
   filePath,
   fileContents: fs.readFileSync(filePath, "utf8"),

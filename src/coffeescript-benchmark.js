@@ -6,7 +6,7 @@ import { compile } from "coffeescript";
 import fs from "fs";
 
 const input = fs.readFileSync(
-  "third_party/coffeescript-lexer-2.0.1.coffee",
+  "third_party/coffeescript-lexer.coffee",
   "utf8",
 );
 

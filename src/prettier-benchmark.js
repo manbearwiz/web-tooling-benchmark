@@ -16,11 +16,11 @@ const parserOptions = {
 
 const payloads = [
   {
-    name: "preact-8.2.5.js",
+    name: "preact.js",
     options: { semi: false, useTabs: false },
   },
   {
-    name: "lodash.core-4.17.4.js",
+    name: "lodash.core.js",
     options: { semi: true, useTabs: true },
   },
   {

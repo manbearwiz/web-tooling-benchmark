@@ -6,10 +6,10 @@ import { SourceMapConsumer, SourceMapGenerator, SourceNode } from "source-map";
 import fs from "fs";
 
 const payloads = [
-  "lodash.min-4.17.4.js.map",
-  "preact-8.2.5.js.map",
-  "source-map.min-0.5.7.js.map",
-  "underscore.min-1.8.3.js.map",
+  "lodash.min.js.map",
+  "preact.js.map",
+  "source-map.min.js.map",
+  "underscore.min.js.map",
 ].map((name) => fs.readFileSync(`third_party/${name}`, "utf8"));
 
 export const name = "source-map";

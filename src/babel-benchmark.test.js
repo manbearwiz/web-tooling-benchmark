@@ -4,4 +4,6 @@
 
 import { fn } from "./babel-benchmark";
 
+vi.mock('fs')
+
 it("babel-benchmark runs to completion", () => void fn());

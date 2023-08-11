@@ -8,7 +8,7 @@ import fs from "fs";
 
 const payloads = [
   {
-    name: "vue.runtime.esm-nobuble-2.4.4.js",
+    name: "vue.runtime.esm-nobuble.js",
     options: { presets: ["es2015"], sourceType: "module" },
   },
 ].map(({ name, options }) => {

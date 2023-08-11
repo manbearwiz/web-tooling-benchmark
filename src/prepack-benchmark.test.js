@@ -4,4 +4,6 @@
 
 import { fn } from "./prepack-benchmark";
 
+vi.mock('fs')
+
 it("prepack-benchmark runs to completion", () => void fn());

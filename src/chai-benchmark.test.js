@@ -4,4 +4,6 @@
 
 import { fn } from "./chai-benchmark";
 
+vi.mock('fs')
+
 it("chai-benchmark runs to completion", () => void fn());

@@ -43,7 +43,7 @@
     "@babel/standalone": "7.22.8",
     "acorn": "8.10.0",
     "acorn-walk": "8.2.0",
-    "autoprefixer": "10.4.14",
+    "autoprefixer": "10.4.15",
     "babel-minify": "0.5.2",
     "benchmark": "^2.1.4",
     "buble": "0.20.0",

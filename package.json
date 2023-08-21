@@ -58,7 +58,7 @@
     "postcss": "8.4.27",
     "postcss-nested": "6.0.1",
     "prepack": "0.2.54",
-    "prettier": "3.0.1",
+    "prettier": "3.0.2",
     "source-map": "0.6.1",
     "terser": "5.19.2",
     "typescript": "5.1.6",

@@ -55,7 +55,7 @@
     "jshint": "2.13.6",
     "lebab": "3.2.1",
     "memfs": "^4.2.0",
-    "postcss": "8.4.27",
+    "postcss": "8.4.28",
     "postcss-nested": "6.0.1",
     "prepack": "0.2.54",
     "prettier": "3.0.2",

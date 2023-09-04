@@ -39,7 +39,7 @@
   },
   "license": "BSD-3-Clause",
   "dependencies": {
-    "@babel/parser": "7.22.7",
+    "@babel/parser": "7.22.15",
     "@babel/standalone": "7.22.8",
     "acorn": "8.10.0",
     "acorn-walk": "8.2.0",

@@ -47,7 +47,7 @@
     "babel-minify": "0.5.2",
     "benchmark": "^2.1.4",
     "buble": "0.20.0",
-    "chai": "4.3.7",
+    "chai": "4.3.8",
     "coffeescript": "2.7.0",
     "compute-gmean": "^1.1.0",
     "espree": "9.6.1",

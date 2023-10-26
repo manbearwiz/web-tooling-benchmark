@@ -9,46 +9,39 @@ or [TypeScript](https://github.com/Microsoft/TypeScript). The goal is to measure
 JavaScript performance aspect (which is affected by the JavaScript engine) and not measure I/O
 or other unrelated aspects.
 
-See the [in-depth
-analysis](https://github.com/v8/web-tooling-benchmark/blob/master/docs/in-depth.md)
-for a detailed description of the tests included in this benchmark suite.
+For a detailed understanding of the tests included in this benchmark suite, please refer to our [in-depth
+analysis](docs/in-depth.md).
 
-The latest browser version of the benchmark is available at
-<https://v8.github.io/web-tooling-benchmark/>.
+You can access the latest browser version of the benchmark at <https://manbearwiz.github.io/web-tooling-benchmark/>.
 
 ## Support
 
-The Web Tooling Benchmark supports the latest [active
-LTS](https://github.com/nodejs/Release#release-schedule) version of Node.js. To see the supported
-Node.js versions of the current version of the benchmark, see [the `node_js` section of our CI
-configuration](https://github.com/v8/web-tooling-benchmark/blob/master/.travis.yml).
+The Web Tooling Benchmark is compatible with the latest [active
+LTS](https://github.com/nodejs/Release#release-schedule) version of Node.js. To check the supported Node.js versions for the current release of the benchmark, see the [the `.nvmrc` file](.nvmrc).
 
 ## Building
 
-To build the benchmark suite, run
+To build the benchmark suite, run:
 
+```sh
+npm install
 ```
-$ npm install
-```
 
-assuming that you have a working [Node.js](https://nodejs.org) installation. Once
-the command is done, it produces a bundled version that is suitable to run in
-JS shells (i.e. `d8`, `jsc` or `jsshell`) in `dist/cli.js` and another bundle
-in `dist/browser.js` that is used by the browser version in `dist/index.html`.
+After running the command, a bundled version suitable for running in JS shells (e.g., `d8`, `jsc` or `jsshell`) will be available at `dist/cli.js`, along with a browser version at `dist/browser.js`, which is used in `dist/index.html`.
 
-To build an individual benchmark rather than the entire suite, pass the `--env.only`
-CLI flag:
+If you wish to build an individual benchmark instead of the entire suite, use the `--env only=` CLI flag like this:
 
-```
-$ npm run build -- --env.only babel
+```sh
+npm run build -- --env only=babel
 ```
 
 ## Running
 
-You can either run the benchmark suite directly via [Node](https://nodejs.org/),
-i.e. like this:
+You have multiple options for running the benchmark suite:
 
-```
+Run it directly via [Node.js](https://nodejs.org/) by executing the following command:
+
+```sh
 $ node dist/cli.js
 Running Web Tooling Benchmark v0.5.2…
 -------------------------------------
@@ -74,22 +67,19 @@ Running Web Tooling Benchmark v0.5.2…
 Geometric mean:  6.98 runs/s
 ```
 
-Or you open a web browser and point it to `dist/index.html`, or you can use one
-of the engine JS shells to run the special bundle in `dist/cli.js`. The easiest
-way to install recent versions of the supported JS engine shells is to run
-[`jsvu`](https://github.com/GoogleChromeLabs/jsvu). Afterwards, you can run the
-benchmark as follows:
+Alternatively, open a web browser and navigate to `dist/index.html` to run the benchmark using the browser interface.
+
+If you prefer to use JavaScript engine shells, you can run the special bundle in `dist/cli.js`. To install recent versions of the supported JS engine shells, you can use [`jsvu`](https://github.com/GoogleChromeLabs/jsvu). After installation, you can run the benchmark as follows:
 
 ```sh
-$ chakra dist/cli.js
-$ javascriptcore dist/cli.js
-$ spidermonkey dist/cli.js
-$ v8 dist/cli.js
+chakra dist/cli.js
+javascriptcore dist/cli.js
+spidermonkey dist/cli.js
+v8 dist/cli.js
 ```
 
-To run an individual benchmark rather than the entire suite via Node, pass the
-`--only` CLI flag:
+If you want to run an individual benchmark instead of the entire suite via Node, use the `--only` CLI flag as follows:
 
-```
-$ npm run build -- --env.only babel && npm run benchmark
+```sh
+npm run build -- --env only=babel && npm run benchmark
 ```

@@ -1,7 +1,6 @@
 import { createFsFromVolume, Volume } from "memfs";
-import angularMaterial from "../npm/angular-material@1.1.8/angular-material.css?raw";
 import backbone from "../npm/backbone@1.1.0/backbone.js?raw";
-import bootstrap from "../npm/bootstrap@4.0.0/dist/css/bootstrap.css?raw";
+import bootstrap from "../npm/bootstrap@5.3.2/dist/css/bootstrap.css?raw";
 import foundation from "../npm/foundation-sites@6.4.2/dist/css/foundation.css?raw";
 import jquery from "../npm/jquery@3.2.1/dist/jquery.js?raw";
 import coffeescript from "../third_party/coffeescript-lexer-2.0.1.coffee?raw";
@@ -21,7 +20,6 @@ import underscoreMap from "../npm/underscore@1.8.3/underscore-min.map?raw";
 import vue from "../npm/vue@2.4.4/dist/vue.runtime.esm.js?raw";
 
 const json = {
-  "./angular-material.css": angularMaterial,
   "./backbone.js": backbone,
   "./bootstrap.css": bootstrap,
   "./foundation.css": foundation,

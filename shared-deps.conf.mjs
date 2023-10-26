@@ -4,11 +4,6 @@
 const config = {
   packages: [
     {
-      name: "angular-material",
-      include: ["angular-material.css"],
-      versions: ["1.1.8"],
-    },
-    {
       name: "backbone",
       include: ["backbone.js"],
       versions: ["1.1.0"],
@@ -16,7 +11,7 @@ const config = {
     {
       name: "bootstrap",
       include: ["dist/css/bootstrap.css"],
-      versions: ["4.0.0"],
+      versions: ["5.3.2"],
     },
     {
       name: "foundation-sites",

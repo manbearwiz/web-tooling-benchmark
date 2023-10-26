@@ -12,11 +12,7 @@ import nestedRules from "./mocks/nested-rules";
 const cleaner = postcss([autoprefixer({ add: false })]);
 const processor = postcss([autoprefixer, nested]);
 
-const payloads = [
-  "bootstrap.css",
-  "foundation.css",
-  "angular-material.css",
-].map((name) => {
+const payloads = ["bootstrap.css", "foundation.css"].map((name) => {
   // Clean prefixes.
   const source = fs.readFileSync(`third_party/${name}`, "utf8");
   // Add some nested rules.

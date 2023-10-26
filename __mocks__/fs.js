@@ -6,7 +6,6 @@ import foundation from "../npm/foundation-sites@6.4.2/dist/css/foundation.css?ra
 import jquery from "../npm/jquery@3.2.1/dist/jquery.js?raw";
 import coffeescript from "../third_party/coffeescript-lexer-2.0.1.coffee?raw";
 import lodash from "../npm/lodash@4.17.4/core.js?raw";
-import lodashMap from "../third_party/lodash.min-4.17.4.js.map?raw";
 import mootools from "../third_party/mootools-core-1.6.0.js?raw";
 import preact from "../npm/preact@8.2.5/dist/preact.js?raw";
 import preactMap from "../npm/preact@8.2.5/dist/preact.min.js.map?raw";
@@ -29,7 +28,6 @@ const json = {
   "./jquery.js":jquery,
   "./coffeescript-lexer.coffee": coffeescript,
   "./lodash.core.js": lodash,
-  "./lodash.min.js.map": lodashMap,
   "./mootools-core.js": mootools,
   "./preact.js": preact,
   "./preact.js.map": preactMap,

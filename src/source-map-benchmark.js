@@ -6,7 +6,6 @@ import { SourceMapConsumer, SourceMapGenerator, SourceNode } from "source-map";
 import fs from "fs";
 
 const payloads = [
-  "lodash.min.js.map",
   "preact.js.map",
   "source-map.min.js.map",
   "underscore.min.js.map",

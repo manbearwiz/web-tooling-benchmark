@@ -5,13 +5,12 @@
 import fs from "fs";
 import { prepackSources } from "prepack";
 
-const sourceFiles = [
-  "third_party/preact.js",
-  "third_party/redux.min.js",
-].map((filePath) => ({
-  filePath,
-  fileContents: fs.readFileSync(filePath, "utf8"),
-}));
+const sourceFiles = ["preact.js", "redux.min.js", "underscore.js"]
+  .map((file) => `third_party/${file}`)
+  .map((filePath) => ({
+    filePath,
+    fileContents: fs.readFileSync(filePath, "utf8"),
+  }));
 
 export const name = "prepack";
 export function fn() {

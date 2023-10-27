@@ -8,7 +8,9 @@ import fs from "fs";
 const payloads = [
   "backbone.js",
   "jquery.js",
-  "mootools-core.js",
+  "lodash.core.js",
+  "preact.js",
+  "redux.js",
   "underscore.js",
 ].map((name) => fs.readFileSync(`third_party/${name}`, "utf8"));
 

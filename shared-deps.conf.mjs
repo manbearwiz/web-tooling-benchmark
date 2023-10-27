@@ -6,7 +6,7 @@ const config = {
     {
       name: "backbone",
       include: ["backbone.js"],
-      versions: ["1.1.0"],
+      versions: ["1.5.0"],
     },
     {
       name: "bootstrap",
@@ -16,17 +16,17 @@ const config = {
     {
       name: "foundation-sites",
       include: ["dist/css/foundation.css"],
-      versions: ["6.4.2"],
+      versions: ["6.8.1"],
     },
     {
       name: "jquery",
       include: ["dist/jquery.js"],
-      versions: ["3.2.1"],
+      versions: ["3.7.1"],
     },
     {
       name: "lodash",
       include: ["core.js"],
-      versions: ["4.17.4"],
+      versions: ["4.17.21"],
     },
     {
       name: "source-map",
@@ -40,7 +40,7 @@ const config = {
     },
     {
       name: "redux",
-      include: ["dist/redux.min.js"],
+      include: ["dist/redux.js", "dist/redux.min.js"],
       versions: ["3.7.2"],
     },
     {
@@ -51,7 +51,7 @@ const config = {
     {
       name: "vue",
       include: ["dist/vue.runtime.esm.js"],
-      versions: ["2.4.4"],
+      versions: ["2.7.15"],
     },
   ],
 };

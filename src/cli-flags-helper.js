@@ -6,6 +6,7 @@ const targetList = new Set([
   "buble",
   "chai",
   "coffeescript",
+  "eslint",
   "espree",
   "esprima",
   "jshint",
@@ -16,7 +17,7 @@ const targetList = new Set([
   "source-map",
   "terser",
   "typescript",
-  "uglify-js"
+  "uglify-js",
 ]);
 
 function getOnlyFlag() {
@@ -37,5 +38,5 @@ module.exports = {
       return [...targetList];
     }
   },
-  targetList: targetList
+  targetList: targetList,
 };

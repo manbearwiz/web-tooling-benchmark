@@ -91,6 +91,10 @@ popular.
 This benchmark runs the CoffeeScript compiler on the [`lexer.coffee`](https://github.com/v8/web-tooling-benchmark/blob/third_party/coffeescript-lexer-2.0.1.coffee)
 file from the CoffeeScript 2.0.1 distribution.
 
+## eslint
+
+Describe the tool and the concrete benchmark case.
+
 ## espree
 
 [Espree](https://github.com/eslint/espree) started out as a fork of Esprima v1.2.2,

@@ -2,69 +2,105 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+import { html, render } from "lit-html";
+import "./style.css";
 import { version } from "../package.json";
-import suite, { meanOpsPerSecond } from "./suite";
+import suite, { meanOpsPerSecond, init } from "./suite.js";
+import logo from "./Logo.png";
 
-function displayStatusMessage(message) {
-  const element = document.getElementById("status");
-  element.innerHTML = `<em>${message}</em>`;
-}
+const app = document.querySelector("#app");
 
-function displayResultMessage(name, message, style) {
-  const element = document.getElementById(`results-cell-${name}`);
-  element.innerHTML = message || "&mdash;";
-  element.classList.remove("result", "highlighted-result");
-  element.classList.add(style);
-}
-
-function reset() {
-  suite.reset();
-  const resultSummaryDiv = document.getElementById("result-summary");
-  resultSummaryDiv.textContent = "";
-
-  const numColumns = 2;
-  const columnHeight = Math.ceil((suite.tasks.length + 1) / numColumns);
-  const resultsTable = document.getElementById("results");
-  let text =
-    "<tr>" + "<th>Benchmark</th><th>Runs/Sec</th>".repeat(numColumns) + "</tr>";
-  for (let i = 0; i < columnHeight; ++i) {
-    text += "<tr>";
-    for (let j = 0; j < numColumns; ++j) {
-      const index = j * columnHeight + i;
-      if (index > suite.tasks.length) break;
-      if (index == suite.tasks.length) {
-        text += `<td class="benchmark-name geometric-mean">Geometric Mean</td>`;
-        text += `<td class="result geometric-mean" id="results-cell-geomean">&mdash;</td>`;
-      } else {
-        const benchmark = suite.tasks[index];
-        text += `<td class="benchmark-name">`;
-        text += `<a href="https://github.com/v8/web-tooling-benchmark/blob/master/docs/in-depth.md#${benchmark.name}" target="_blank">${benchmark.name}</a></td>`;
-        text += `<td class="result" id="results-cell-${benchmark.name}">&mdash;</td>`;
-      }
-    }
-    text += "</tr>";
+const template = (task = undefined) => {
+  if (suite.aborted) return;
+  if (task?.error) {
+    return html`<h1>ERROR</h1>
+      <p>
+        Encountered errors during execution of ${task.name} test. Refusing to
+        run a partial benchmark suite.
+      </p>
+      <pre>${task.error.stack}</pre>`;
   }
-  resultsTable.innerHTML = text;
-}
+  const done = suite.results.every((result) => !!result) && !task;
+  return html`
+    <a href="https://github.com/v8/web-tooling-benchmark"
+      ><img id="logo" src="${logo}" alt="Web Tooling Benchmark"
+    /></a>
+
+    <p class="summary">
+      The Web Tooling Benchmark is a performance test suite focused on
+      JavaScript related workloads found in common web developer tools these
+      days. For more information, read the
+      <a
+        href="https://github.com/v8/web-tooling-benchmark/blob/master/docs/in-depth.md"
+        >in-depth analysis</a
+      >. Bigger scores are better.
+    </p>
+
+    <div id="result-summary">
+      ${done
+        ? html`
+            <label>Runs/Sec</label><br />
+            <span class="score"
+              >${meanOpsPerSecond(suite.results).toFixed(2)}</span
+            >
+          `
+        : ""}
+    </div>
+
+    <div id="status">
+      ${!!task
+        ? html`<em>Running ${task.name}...</em>`
+        : html`
+            <a href="javascript:void(0);" @click="${start}">
+              ${!done ? "Start test" : "Test again"}
+            </a>
+          `}
+    </div>
+
+    <table id="results">
+      <thead>
+        <tr>
+          <th>Benchmark</th>
+          <th>Runs/Sec</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${suite.tasks.map(
+          (task) =>
+            html`<tr>
+              <td class="benchmark-name">
+                <a
+                  href="${`https://github.com/v8/web-tooling-benchmark/blob/master/docs/in-depth.md#${task.name}`}"
+                >
+                  ${task.name}
+                </a>
+              </td>
+              <td class="result" id="results-cell-${task.name}">
+                ${task.result?.hz?.toFixed(2) ?? "-"}
+              </td>
+            </tr>`,
+        )}
+      </tbody>
+    </table>
+
+    <div id="version">${version}</div>
+  `;
+};
 
 function initialize() {
-  reset();
+  init().then(() => {
+    suite.tasks.forEach((task) => {
+      task.addEventListener("start", () => render(template(task), app));
+      task.addEventListener("complete", () => render(template(task), app));
+    });
 
-  document.title = `Web Tooling Benchmark v${version}`;
-
-  const versionDiv = document.getElementById("version");
-  versionDiv.innerHTML = `v${version}`;
-
-  const statusDiv = document.getElementById("status");
-  statusDiv.innerHTML = `<a href="javascript:void(0);">Start test</a>`;
-  statusDiv.firstChild.onclick = start;
+    render(template(), app);
+  });
 }
 
 function start() {
-  reset();
-
-  const statusDiv = document.getElementById("status");
-  statusDiv.innerHTML = "<em>Running test suite\u2026</em>";
+  suite.reset();
+  render(template(), app);
   // Add a small delay to allow the browser to render the status message.
   suite.setup = () => new Promise((r) => setTimeout(r, 1));
   suite.run();
@@ -86,24 +122,6 @@ window.automated = {
   start,
 };
 
-suite.tasks.forEach((task) => {
-  task.addEventListener("start", () => {
-    if (suite.aborted) return;
-    displayResultMessage(
-      task.name,
-      "<em>Running...</em>",
-      "highlighted-result",
-    );
-    displayStatusMessage(`Running ${task.name}...`);
-  });
-  task.addEventListener("complete", () => {
-    if (suite.aborted) return;
-    displayResultMessage(task.name, `${task.result.hz.toFixed(2)}`, "result");
-    const iterations = task.result.samples.length;
-    displayStatusMessage(`Ran ${iterations} iterations of ${task.name}...`);
-  });
-});
-
 suite.addEventListener("complete", () => {
   window.automated.completed = true;
   if (suite.aborted) return;
@@ -113,21 +131,12 @@ suite.addEventListener("complete", () => {
     score: result.hz,
   }));
   window.automated.results.push({ name: "total", score: hz });
-  displayResultMessage("geomean", `${hz.toFixed(2)}`, "highlighted-result");
-
-  const statusDiv = document.getElementById("status");
-  statusDiv.innerHTML = `<a href="javascript:void(0);">Test again</a>`;
-  statusDiv.firstChild.onclick = start;
-
-  const resultSummaryDiv = document.getElementById("result-summary");
-  resultSummaryDiv.innerHTML = `<label>Runs/Sec</label><br><span class="score">${hz.toFixed(
-    2,
-  )}</span>`;
+  render(template(), app);
 });
 
-suite.addEventListener("error", ({ task: { name, result } }) => {
+suite.addEventListener("error", ({ task }) => {
   window.automated.completed = true;
-  document.body.innerHTML = `<h1>ERROR</h1><p>Encountered errors during execution of ${name} test. Refusing to run a partial benchmark suite.</p><pre>${result.error.stack}</pre>`;
-  console.error(result.error);
+  render(template(task), app);
+  console.error(task.result.error);
   suite.abort();
 });

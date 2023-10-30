@@ -80,5 +80,5 @@ v8 dist/cli.js
 If you want to run an individual benchmark instead of the entire suite via Node, use the `--env only=` webpack flag as follows:
 
 ```sh
-npm run build -- --env only=babel && npm run benchmark
+VITE_ONLY=babel npm run build && npm run benchmark
 ```

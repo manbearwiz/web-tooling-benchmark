@@ -45,7 +45,6 @@
     "acorn-walk": "8.2.0",
     "autoprefixer": "10.4.15",
     "babel-minify": "0.5.2",
-    "benchmark": "^2.1.4",
     "buble": "0.20.0",
     "chai": "4.3.7",
     "coffeescript": "2.7.0",
@@ -61,6 +60,7 @@
     "prettier": "3.0.2",
     "source-map": "0.6.1",
     "terser": "5.20.0",
+    "tinybench": "^2.5.1",
     "typescript": "5.1.6",
     "uglify-js": "3.17.4"
   },

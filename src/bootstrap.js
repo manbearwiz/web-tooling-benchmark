@@ -2,9 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-import gmean from "compute-gmean";
 import packageJSON from "../package.json";
-import suite from "./suite";
+import suite, { meanOpsPerSecond } from "./suite";
 
 function displayStatusMessage(message) {
   const element = document.getElementById("status");
@@ -12,26 +11,19 @@ function displayStatusMessage(message) {
 }
 
 function displayResultMessage(name, message, style) {
-  const element = document.getElementById("results-cell-" + name);
+  const element = document.getElementById(`results-cell-${name}`);
   element.innerHTML = message || "&mdash;";
-  if (element.classList) {
-    element.classList.remove("result");
-    element.classList.remove("highlighted-result");
-    element.classList.add(style);
-  } else {
-    element.className = style;
-  }
+  element.classList.remove("result", "highlighted-result");
+  element.classList.add(style);
 }
 
 function reset() {
+  suite.reset();
   const resultSummaryDiv = document.getElementById("result-summary");
   resultSummaryDiv.textContent = "";
 
-  const benchmarks = [];
-  suite.forEach((benchmark) => benchmarks.push(benchmark));
-
   const numColumns = 2;
-  const columnHeight = Math.ceil((benchmarks.length + 1) / numColumns);
+  const columnHeight = Math.ceil((suite.tasks.length + 1) / numColumns);
   const resultsTable = document.getElementById("results");
   let text =
     "<tr>" + "<th>Benchmark</th><th>Runs/Sec</th>".repeat(numColumns) + "</tr>";
@@ -39,12 +31,12 @@ function reset() {
     text += "<tr>";
     for (let j = 0; j < numColumns; ++j) {
       const index = j * columnHeight + i;
-      if (index > benchmarks.length) break;
-      if (index == benchmarks.length) {
+      if (index > suite.tasks.length) break;
+      if (index == suite.tasks.length) {
         text += `<td class="benchmark-name geometric-mean">Geometric Mean</td>`;
         text += `<td class="result geometric-mean" id="results-cell-geomean">&mdash;</td>`;
       } else {
-        const benchmark = benchmarks[index];
+        const benchmark = suite.tasks[index];
         text += `<td class="benchmark-name">`;
         text += `<a href="https://github.com/v8/web-tooling-benchmark/blob/master/docs/in-depth.md#${benchmark.name}" target="_blank">${benchmark.name}</a></td>`;
         text += `<td class="result" id="results-cell-${benchmark.name}">&mdash;</td>`;
@@ -73,7 +65,9 @@ function start() {
 
   const statusDiv = document.getElementById("status");
   statusDiv.innerHTML = "<em>Running test suite\u2026</em>";
-  suite.run({ async: true });
+  // Add a small delay to allow the browser to render the status message.
+  suite.setup = () => new Promise((r) => setTimeout(r, 1));
+  suite.run();
 }
 
 window.onerror = () => {
@@ -92,44 +86,32 @@ window.automated = {
   start,
 };
 
-suite.forEach((benchmark) => {
-  benchmark.on("start", (event) => {
+suite.tasks.forEach((task) => {
+  task.addEventListener("start", () => {
     if (suite.aborted) return;
     displayResultMessage(
-      benchmark.name,
+      task.name,
       "<em>Running...</em>",
       "highlighted-result",
     );
-    displayStatusMessage(`Running iteration 1 of ${benchmark.name}...`);
+    displayStatusMessage(`Running ${task.name}...`);
   });
-  benchmark.on("cycle", (event) => {
+  task.addEventListener("complete", () => {
     if (suite.aborted) return;
-    const iteration = benchmark.stats.sample.length + 1;
-    displayStatusMessage(
-      `Running iteration ${iteration} of ${benchmark.name}...`,
-    );
-  });
-  benchmark.on("complete", (event) => {
-    if (suite.aborted) return;
-    displayResultMessage(
-      benchmark.name,
-      `${benchmark.hz.toFixed(2)}`,
-      "result",
-    );
-    const iterations = benchmark.stats.sample.length;
-    displayStatusMessage(
-      `Ran ${iterations} iterations of ${benchmark.name}...`,
-    );
+    displayResultMessage(task.name, `${task.result.hz.toFixed(2)}`, "result");
+    const iterations = task.result.samples.length;
+    displayStatusMessage(`Ran ${iterations} iterations of ${task.name}...`);
   });
 });
 
-suite.on("complete", (event) => {
+suite.addEventListener("complete", () => {
   window.automated.completed = true;
   if (suite.aborted) return;
-  const hz = gmean(suite.map((benchmark) => benchmark.hz));
-  window.automated.results = suite.map((benchmark) => {
-    return { name: benchmark.name, score: benchmark.hz };
-  });
+  const hz = meanOpsPerSecond(suite.results);
+  window.automated.results = suite.tasks.map(({ name, result }) => ({
+    name,
+    score: result.hz,
+  }));
   window.automated.results.push({ name: "total", score: hz });
   displayResultMessage("geomean", `${hz.toFixed(2)}`, "highlighted-result");
 
@@ -143,12 +125,9 @@ suite.on("complete", (event) => {
   )}</span>`;
 });
 
-suite.on("error", (event) => {
+suite.addEventListener("error", ({ task: { name, result } }) => {
   window.automated.completed = true;
-  const benchmark = event.target;
-  const error = benchmark.error;
-  const name = benchmark.name;
-  document.body.innerHTML = `<h1>ERROR</h1><p>Encountered errors during execution of ${name} test. Refusing to run a partial benchmark suite.</p><pre>${error.stack}</pre>`;
-  console.error(error);
+  document.body.innerHTML = `<h1>ERROR</h1><p>Encountered errors during execution of ${name} test. Refusing to run a partial benchmark suite.</p><pre>${result.error.stack}</pre>`;
+  console.error(result.error);
   suite.abort();
 });

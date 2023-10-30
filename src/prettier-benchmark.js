@@ -41,12 +41,10 @@ const payloads = [
 }));
 
 export const name = "prettier";
-export const defer = true;
-export async function fn(deferred) {
+export async function fn() {
   await Promise.all(
     payloads.map(({ payload, options }) =>
       format(payload, { ...parserOptions, ...options }),
     ),
   );
-  deferred.resolve();
 }

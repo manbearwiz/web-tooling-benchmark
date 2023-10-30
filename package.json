@@ -6,7 +6,7 @@
   "main": "src/cli.js",
   "scripts": {
     "benchmark": "node dist/cli.js",
-    "build:uglify-js-bundled": "node node_modules/uglify-js/bin/uglifyjs -b preamble=\"'const UglifyJS = module.exports = {};'\" --self > build/uglify-js-bundled.js",
+    "build:uglify-js-bundled": "uglifyjs -b preamble=\"'const UglifyJS = {}; export default UglifyJS;'\" --self > build/uglify-js-bundled.js",
     "build:shared-deps": "shared-deps build shared-deps.conf.mjs --clean",
     "build": "webpack",
     "postinstall": "npm run build:uglify-js-bundled && npm run build:shared-deps && npm run build",

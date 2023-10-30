@@ -2,10 +2,10 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-import packageJson from "../package.json";
+import { version } from "../package.json";
 import suite, { meanOpsPerSecond } from "./suite";
 
-console.log(`Running Web Tooling Benchmark v${packageJson.version}…`);
+console.log(`Running Web Tooling Benchmark v${version}…`);
 console.log("-------------------------------------");
 
 suite.addEventListener("error", ({ task: { name, result } }) => {

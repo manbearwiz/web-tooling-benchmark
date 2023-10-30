@@ -3,7 +3,9 @@ const semver = require("semver");
 const { EOL } = require("os");
 
 const { dependencies } = require("../../package.json");
-const { targetList } = require("../../src/cli-flags-helper");
+const targets = require("../../src/targetList.json").targetList;
+
+const targetList = new Set(targets);
 
 // babel -> @babel/standalone
 targetList.delete("babel");

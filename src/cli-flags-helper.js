@@ -1,23 +1,6 @@
-const targetList = new Set([
-  "acorn",
-  "babel",
-  "babel-minify",
-  "babylon",
-  "buble",
-  "chai",
-  "coffeescript",
-  "espree",
-  "esprima",
-  "jshint",
-  "lebab",
-  "postcss",
-  "prepack",
-  "prettier",
-  "source-map",
-  "terser",
-  "typescript",
-  "uglify-js"
-]);
+import { targetList as list } from "./targetList.json";
+
+export const targetList = new Set([...list]);
 
 function getOnlyFlag() {
   const onlyIndex = process.argv.indexOf("--only");
@@ -26,16 +9,13 @@ function getOnlyFlag() {
   }
 }
 
-module.exports = {
-  getTarget: () => {
-    const onlyArg = getOnlyFlag();
-    if (targetList.has(onlyArg)) {
-      return [onlyArg];
-    } else if (typeof ONLY != "undefined" && targetList.has(ONLY)) {
-      return [ONLY];
-    } else {
-      return [...targetList];
-    }
-  },
-  targetList: targetList
-};
+export function getTarget() {
+  const onlyArg = getOnlyFlag();
+  if (targetList.has(onlyArg)) {
+    return [onlyArg];
+  } else if (typeof ONLY != "undefined" && targetList.has(ONLY)) {
+    return [ONLY];
+  } else {
+    return [...targetList];
+  }
+}

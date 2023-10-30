@@ -1,0 +1,22 @@
+{
+  "targetList": [
+    "acorn",
+    "babel",
+    "babel-minify",
+    "babylon",
+    "buble",
+    "chai",
+    "coffeescript",
+    "espree",
+    "esprima",
+    "jshint",
+    "lebab",
+    "postcss",
+    "prepack",
+    "prettier",
+    "source-map",
+    "terser",
+    "typescript",
+    "uglify-js"
+  ]
+}

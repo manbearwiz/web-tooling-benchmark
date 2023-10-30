@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-import packageJSON from "../package.json";
+import { version } from "../package.json";
 import suite, { meanOpsPerSecond } from "./suite";
 
 function displayStatusMessage(message) {
@@ -50,10 +50,10 @@ function reset() {
 function initialize() {
   reset();
 
-  document.title = `Web Tooling Benchmark v${packageJSON.version}`;
+  document.title = `Web Tooling Benchmark v${version}`;
 
   const versionDiv = document.getElementById("version");
-  versionDiv.innerHTML = `v${packageJSON.version}`;
+  versionDiv.innerHTML = `v${version}`;
 
   const statusDiv = document.getElementById("status");
   statusDiv.innerHTML = `<a href="javascript:void(0);">Start test</a>`;

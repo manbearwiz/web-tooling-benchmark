@@ -6,10 +6,12 @@ const CopyWebpackPlugin = require("copy-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const path = require("path");
 const webpack = require("webpack");
-const targetList = require("./src/cli-flags-helper").targetList;
+const { targetList } = require("./src/targetList.json");
+
+const targetSet = new Set(targetList);
 
 function getTarget(env) {
-  return env && targetList.has(env.only) && env.only;
+  return env && targetSet.has(env.only) && env.only;
 }
 
 module.exports = (env) => [

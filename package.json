@@ -46,7 +46,7 @@
     "autoprefixer": "10.4.15",
     "babel-minify": "0.5.2",
     "buble": "0.20.0",
-    "chai": "4.3.7",
+    "chai": "4.3.10",
     "coffeescript": "2.7.0",
     "compute-gmean": "^1.1.0",
     "espree": "9.6.1",

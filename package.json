@@ -52,7 +52,7 @@
     "espree": "9.6.1",
     "esprima": "4.0.1",
     "jshint": "2.13.6",
-    "lebab": "3.2.1",
+    "lebab": "3.2.3",
     "memfs": "^4.2.0",
     "postcss": "8.4.31",
     "postcss-nested": "6.0.1",

@@ -1,68 +1,40 @@
+// Copyright 2017 the V8 project authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
 import { version } from "../package.json";
 import suite, { meanOpsPerSecond } from "./suite";
 import { html, render, nothing } from "lit-html";
-import { map } from "lit-html/directives/map.js";
-import { range } from "lit-html/directives/range.js";
-import { choose } from "lit-html/directives/choose.js";
+import { classMap } from "lit-html/directives/class-map.js";
 
-const resultsTemplate = () => {
-  const numColumns = 2;
-  const columnHeight = Math.ceil((suite.tasks.length + 1) / numColumns);
-
-  return html`<tr>
-      ${map(
-        range(numColumns),
-        () =>
-          html`<th>Benchmark</th>
-            <th>Runs/Sec</th>`,
-      )}
+const resultsTemplate = (activeName) =>
+  html`<tr>
+      <th>Benchmark</th>
+      <th>Runs/Sec</th>
     </tr>
-    ${map(
-      range(columnHeight),
-      (row) =>
+    ${suite.tasks.map(
+      ({ name, result }) =>
         html`<tr>
-          ${map([row, row + columnHeight], (task) =>
-            choose(
-              task,
-              [
-                [
-                  suite.tasks.length,
-                  () =>
-                    html`<td class="benchmark-name geometric-mean">
-                        Geometric Mean
-                      </td>
-                      <td
-                        class="result geometric-mean"
-                        id="results-cell-geomean"
-                      >
-                        &mdash;
-                      </td>`,
-                ],
-                [suite.tasks.length + 1, () => nothing],
-              ],
-              () => {
-                const { name, result } = suite.tasks[task];
-
-                return html`<td class="benchmark-name">
-                    <a
-                      href="https://github.com/v8/web-tooling-benchmark/blob/master/docs/in-depth.md#${name}"
-                      target="_blank"
-                    >
-                      ${name}
-                    </a>
-                  </td>
-                  <td
-                    class="result ${result ? "highlighted-result" : ""}"
-                    id="results-cell-${name}"
-                  >
-                    ${result?.hz?.toFixed(2) ?? "—"}
-                  </td>`;
-              },
-            ),
-          )}
+          <td class="benchmark-name">
+            <a
+              href="https://github.com/v8/web-tooling-benchmark/blob/master/docs/in-depth.md#${name}"
+              target="_blank"
+            >
+              ${name}
+            </a>
+          </td>
+          <td
+            class=${classMap({
+              result: true,
+              "highlighted-result": name === activeName,
+            })}
+          >
+            ${name === activeName
+              ? html`<em>Running...</em>`
+              : result?.hz?.toFixed(2) ?? "—"}
+          </td>
         </tr>`,
     )}`;
-};
 
 const resultsSummaryTemplate = () =>
   suite.results.every((result) => !!result)
@@ -76,16 +48,16 @@ const statusTemplate = (task) =>
   task
     ? html`<em>Running ${task.name}...</em>`
     : html`
-        <a href="javascript:void(0);" @click=${start}>
+        <button @click=${start}>
           ${suite.results.some((result) => !!result)
             ? "Test again"
             : "Start test"}
-        </a>
+        </button>
       `;
 
-const renderResults = () => {
+const renderResults = (activeName) => {
   render(resultsSummaryTemplate(), document.getElementById("result-summary"));
-  render(resultsTemplate(), document.getElementById("results"));
+  render(resultsTemplate(activeName), document.getElementById("results"));
 };
 
 const reset = () => {
@@ -126,7 +98,7 @@ window.automated = {
 suite.tasks.forEach((task) => {
   task.addEventListener("start", () => {
     if (suite.aborted) return;
-    renderResults();
+    renderResults(task.name);
     render(statusTemplate(task), document.getElementById("status"));
   });
 });

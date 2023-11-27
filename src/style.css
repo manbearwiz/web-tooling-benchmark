@@ -65,7 +65,7 @@ div#status {
   height: 20px;
 }
 
-div#status a:link {
+div#status button {
   font-weight: bold;
 }
 
@@ -103,9 +103,12 @@ div#version {
 }
 
 a:link,
-a:visited {
+a:visited,
+button {
   color: rgb(19, 156, 7);
   text-decoration: none;
+  background: none !important;
+  border: none;
 }
 
 a:link:hover {

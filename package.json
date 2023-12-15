@@ -9,7 +9,7 @@
     "build:uglify-js-bundled": "uglifyjs -b preamble=\"'let UglifyJS = {}; export default UglifyJS;'\" --self > build/uglify-js-bundled.js",
     "build:shared-deps": "shared-deps build shared-deps.conf.mjs --clean",
     "dev": "vite",
-    "build": "NODE_OPTIONS=--max-old-space-size=8192 vite build",
+    "build": "vite build",
     "build:browser": "vite build --mode browser",
     "preview": "vite preview",
     "postinstall": "npm run build:uglify-js-bundled && npm run build:shared-deps && npm run build",

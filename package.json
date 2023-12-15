@@ -76,7 +76,7 @@
     "self-hosted-shared-dependencies": "^2.0.1",
     "semver": "^7.5.3",
     "stream-browserify": "^3.0.0",
-    "vitest": "^0.34.1",
+    "vitest": "^1.0.4",
     "web-tooling-benchmark-generator": "^1.0.2",
     "webpack": "^5.88.1",
     "webpack-cli": "^5.1.4"

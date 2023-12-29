@@ -2,61 +2,35 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-import { html, render } from "lit-html";
-import "./style.css";
+import { html, render, nothing } from "lit-html";
+import "./style.scss";
 import { version } from "../package.json";
 import suite, { meanOpsPerSecond, init } from "./suite.js";
+import { classMap } from "lit-html/directives/class-map.js";
 import logo from "./Logo.png";
 
-const app = document.querySelector("#app");
+const results = document.getElementById("results");
 
-const template = (task = undefined) => {
-  if (suite.aborted) return;
-  if (task?.error) {
-    return html`<h1>ERROR</h1>
-      <p>
-        Encountered errors during execution of ${task.name} test. Refusing to
-        run a partial benchmark suite.
-      </p>
-      <pre>${task.error.stack}</pre>`;
-  }
-  const done = suite.results.every((result) => !!result) && !task;
-  return html`
-    <a href="https://github.com/v8/web-tooling-benchmark"
-      ><img id="logo" src="${logo}" alt="Web Tooling Benchmark"
-    /></a>
-
-    <p class="summary">
-      The Web Tooling Benchmark is a performance test suite focused on
-      JavaScript related workloads found in common web developer tools these
-      days. For more information, read the
-      <a
-        href="https://github.com/v8/web-tooling-benchmark/blob/master/docs/in-depth.md"
-        >in-depth analysis</a
-      >. Bigger scores are better.
-    </p>
-
-    <div id="result-summary">
-      ${done
-        ? html`
-            <label>Runs/Sec</label><br />
+const resultsTemplate = (activeName) =>
+  html`<div id="result-summary">
+      ${suite.results.every((result) => !!result)
+        ? html`<label>Runs/Sec</label><br />
             <span class="score"
               >${meanOpsPerSecond(suite.results).toFixed(2)}</span
-            >
-          `
-        : ""}
+            >`
+        : nothing}
     </div>
-
     <div id="status">
-      ${!!task
-        ? html`<em>Running ${task.name}...</em>`
+      ${activeName
+        ? html`<em>Running ${activeName}...</em>`
         : html`
-            <a href="javascript:void(0);" @click="${start}">
-              ${!done ? "Start test" : "Test again"}
-            </a>
+            <button @click=${start}>
+              ${suite.results.some((result) => !!result)
+                ? "Test again"
+                : "Start test"}
+            </button>
           `}
     </div>
-
     <table id="results">
       <thead>
         <tr>
@@ -66,41 +40,56 @@ const template = (task = undefined) => {
       </thead>
       <tbody>
         ${suite.tasks.map(
-          (task) =>
+          ({ name, result }) =>
             html`<tr>
               <td class="benchmark-name">
                 <a
-                  href="${`https://github.com/v8/web-tooling-benchmark/blob/master/docs/in-depth.md#${task.name}`}"
+                  href="https://github.com/v8/web-tooling-benchmark/blob/master/docs/in-depth.md#${name}"
+                  target="_blank"
                 >
-                  ${task.name}
+                  ${name}
                 </a>
               </td>
-              <td class="result" id="results-cell-${task.name}">
-                ${task.result?.hz?.toFixed(2) ?? "-"}
+              <td
+                class=${classMap({
+                  result: true,
+                  "highlighted-result": name === activeName,
+                })}
+              >
+                ${name === activeName
+                  ? html`<em>Running...</em>`
+                  : result?.hz?.toFixed(2) ?? "—"}
               </td>
             </tr>`,
         )}
       </tbody>
-    </table>
-
-    <div id="version">${version}</div>
-  `;
-};
+    </table>`;
 
 function initialize() {
-  init().then(() => {
-    suite.tasks.forEach((task) => {
-      task.addEventListener("start", () => render(template(task), app));
-      task.addEventListener("complete", () => render(template(task), app));
-    });
+  document.title = `Web Tooling Benchmark v${version}`;
+  render(
+    html`<a href="https://github.com/v8/web-tooling-benchmark"
+      ><img id="logo" src="${logo}" alt="Web Tooling Benchmark"
+    /></a>`,
+    document.getElementById("logo-container"),
+  );
+  render(html`v${version}`, document.getElementById("version"));
 
-    render(template(), app);
+  init().then(() => {
+    suite.tasks.forEach((task) =>
+      task.addEventListener(
+        "start",
+        () => !suite.aborted && render(resultsTemplate(task.name), results),
+      ),
+    );
+
+    render(resultsTemplate(), results);
   });
 }
 
 function start() {
   suite.reset();
-  render(template(), app);
+  render(resultsTemplate(), results);
   // Add a small delay to allow the browser to render the status message.
   suite.setup = () => new Promise((r) => setTimeout(r, 1));
   suite.run();
@@ -131,12 +120,20 @@ suite.addEventListener("complete", () => {
     score: result.hz,
   }));
   window.automated.results.push({ name: "total", score: hz });
-  render(template(), app);
+  render(resultsTemplate(), results);
 });
 
-suite.addEventListener("error", ({ task }) => {
+suite.addEventListener("error", ({ task: { name, result } }) => {
   window.automated.completed = true;
-  render(template(task), app);
-  console.error(task.result.error);
+  render(
+    html`<h1>ERROR</h1>
+      <p>
+        Encountered errors during execution of ${name} test. Refusing to run a
+        partial benchmark suite.
+      </p>
+      <pre>${result.error.stack}</pre>`,
+    document.body,
+  );
+  console.error(result.error);
   suite.abort();
 });

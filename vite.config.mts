@@ -37,7 +37,7 @@ export default defineConfig(({ mode }) => ({
   plugins: [
     nodePolyfills({
       overrides: {
-        fs: "/__mocks__/fs",
+        fs: resolve(__dirname, '__mocks__/fs.js'),
       },
       include: [
         "buffer",
@@ -47,6 +47,7 @@ export default defineConfig(({ mode }) => ({
         "path",
         "process",
         "stream",
+        "util",
       ],
     }),
   ],

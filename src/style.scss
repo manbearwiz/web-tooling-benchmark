@@ -1,0 +1,156 @@
+:root {
+  --main-color: rgb(19, 156, 7);
+}
+
+body {
+  font-family: Roboto, Helvetica, Verdana, sans-serif;
+  padding-bottom: 0;
+  display: block;
+  width: 600px;
+  margin: auto;
+  text-align: center;
+  padding: 10px;
+}
+
+::selection {
+  background-color: var(--main-color);
+  color: white;
+}
+
+p.summary {
+  margin: 18px auto 5px;
+  background-image: linear-gradient(
+    to right,
+    white 70%,
+    rgba(255, 255, 255, 0)
+  );
+  text-align: center;
+}
+
+h1 {
+  color: var(--main-color);
+  text-align: left;
+  margin-top: 40px;
+}
+
+p {
+  text-align: left;
+  text-indent: 20px;
+
+  &:first-of-type {
+    text-indent: 0;
+  }
+}
+
+div#status {
+  margin-top: 20px;
+  height: 20px;
+
+  button {
+    font-weight: bold;
+  }
+}
+
+div#result-summary {
+  margin-top: 20px;
+
+  &:empty {
+    display: none;
+  }
+
+  label {
+    font-weight: bold;
+  }
+
+  .score {
+    color: var(--main-color);
+    display: block;
+    font-size: 18px;
+    line-height: 18px;
+  }
+}
+
+div#version {
+  margin-top: 24px;
+  font-size: 12px;
+  font-style: italic;
+  color: darkgrey;
+}
+
+a:link,
+a:visited,
+button {
+  color: var(--main-color);
+  text-decoration: none;
+  background: none !important;
+  border: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+img#logo {
+  height: 260px;
+}
+
+table#results {
+  border-spacing: 0;
+  border-collapse: collapse;
+  margin-top: 15px;
+  width: 100%;
+  table-layout: fixed;
+
+  td,
+  th {
+    padding: 4px 8px;
+  }
+
+  th {
+    font-size: 14px;
+  }
+
+  tr:first-child > th:nth-child(odd):not(:first-child) {
+    border-left: 15px solid white;
+  }
+
+  tr:first-child > th:nth-child(odd) {
+    text-align: left;
+  }
+
+  tr:first-child > th:nth-child(even) {
+    width: px;
+  }
+
+  tr:nth-child(even):not(:first-child) {
+    background-color: rgb(238, 247, 238);
+  }
+
+  .result {
+    color: var(--main-color);
+    white-space: nowrap;
+  }
+
+  .highlighted-result {
+    background-color: var(--main-color);
+    color: white;
+  }
+
+  .benchmark-name {
+    text-align: left;
+    white-space: nowrap;
+
+    &:not(.category):not(.geometric-mean) {
+      text-indent: 0.5em;
+    }
+
+    &:not(:first-child) {
+      border-left: 15px solid white;
+    }
+
+    a:link,
+    a:visited {
+      color: black;
+    }
+  }
+}

@@ -46,7 +46,7 @@
     "autoprefixer": "10.4.15",
     "babel-minify": "0.5.2",
     "buble": "0.20.0",
-    "chai": "4.3.10",
+    "chai": "5.0.0",
     "coffeescript": "2.7.0",
     "compute-gmean": "^1.1.0",
     "espree": "9.6.1",
@@ -76,7 +76,7 @@
     "self-hosted-shared-dependencies": "^2.0.1",
     "semver": "^7.5.3",
     "stream-browserify": "^3.0.0",
-    "vitest": "^1.0.4",
+    "vitest": "^1.1.0",
     "web-tooling-benchmark-generator": "^1.0.2",
     "webpack": "^5.88.1",
     "webpack-cli": "^5.1.4"
@@ -86,6 +86,7 @@
     "node-gyp": "^9.4.0",
     "yargs-parser": "^21.1.1",
     "fbjs": "^3.0.5",
-    "zip-dir": "2.0.0"
+    "zip-dir": "2.0.0",
+    "chai": "5.0.0"
   }
 }

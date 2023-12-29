@@ -7,7 +7,7 @@
 import { assert, expect, AssertionError, util, Assertion } from "chai";
 
 global.err = function globalErr(fn, val) {
-  if (util.type(fn) !== "function") throw new AssertionError("Invalid fn");
+  if (util.type(fn) !== "Function") throw new AssertionError("Invalid fn");
 
   try {
     fn();
@@ -197,12 +197,12 @@ describe("assert", () => {
 
     err(
       () => assert.instanceOf(new Foo(), 1, "blah"),
-      "blah: The instanceof assertion needs a constructor but number was given.",
+      "blah: The instanceof assertion needs a constructor but Number was given.",
     );
 
     err(
       () => assert.instanceOf(new Foo(), "batman"),
-      "The instanceof assertion needs a constructor but string was given.",
+      "The instanceof assertion needs a constructor but String was given.",
     );
 
     err(
@@ -212,7 +212,7 @@ describe("assert", () => {
 
     err(
       () => assert.instanceOf(new Foo(), true),
-      "The instanceof assertion needs a constructor but boolean was given.",
+      "The instanceof assertion needs a constructor but Boolean was given.",
     );
 
     err(
@@ -230,7 +230,7 @@ describe("assert", () => {
       const t = new Thing();
       Thing.prototype = 1337;
       assert.instanceOf(t, Thing);
-    }, "The instanceof assertion needs a constructor but function was given.");
+    }, "The instanceof assertion needs a constructor but Function was given.");
 
     if (
       typeof Symbol !== "undefined" &&
@@ -238,7 +238,7 @@ describe("assert", () => {
     ) {
       err(
         () => assert.instanceOf(new Foo(), Symbol()),
-        "The instanceof assertion needs a constructor but symbol was given.",
+        "The instanceof assertion needs a constructor but Symbol was given.",
       );
 
       err(() => {
@@ -270,12 +270,12 @@ describe("assert", () => {
 
     err(
       () => assert.notInstanceOf(new Foo(), 1, "blah"),
-      "blah: The instanceof assertion needs a constructor but number was given.",
+      "blah: The instanceof assertion needs a constructor but Number was given.",
     );
 
     err(
       () => assert.notInstanceOf(new Foo(), "batman"),
-      "The instanceof assertion needs a constructor but string was given.",
+      "The instanceof assertion needs a constructor but String was given.",
     );
 
     err(
@@ -285,7 +285,7 @@ describe("assert", () => {
 
     err(
       () => assert.notInstanceOf(new Foo(), true),
-      "The instanceof assertion needs a constructor but boolean was given.",
+      "The instanceof assertion needs a constructor but Boolean was given.",
     );
 
     err(
@@ -304,7 +304,7 @@ describe("assert", () => {
     ) {
       err(
         () => assert.notInstanceOf(new Foo(), Symbol()),
-        "The instanceof assertion needs a constructor but symbol was given.",
+        "The instanceof assertion needs a constructor but Symbol was given.",
       );
 
       err(() => {
@@ -3799,17 +3799,17 @@ it("instanceof", () => {
 
   err(
     () => expect(new Foo()).to.an.instanceof(1, "blah"),
-    "blah: The instanceof assertion needs a constructor but number was given.",
+    "blah: The instanceof assertion needs a constructor but Number was given.",
   );
 
   err(
     () => expect(new Foo(), "blah").to.an.instanceof(1),
-    "blah: The instanceof assertion needs a constructor but number was given.",
+    "blah: The instanceof assertion needs a constructor but Number was given.",
   );
 
   err(
     () => expect(new Foo()).to.an.instanceof("batman"),
-    "The instanceof assertion needs a constructor but string was given.",
+    "The instanceof assertion needs a constructor but String was given.",
   );
 
   err(
@@ -3819,7 +3819,7 @@ it("instanceof", () => {
 
   err(
     () => expect(new Foo()).to.an.instanceof(true),
-    "The instanceof assertion needs a constructor but boolean was given.",
+    "The instanceof assertion needs a constructor but Boolean was given.",
   );
 
   err(
@@ -3837,7 +3837,7 @@ it("instanceof", () => {
     const t = new Thing();
     Thing.prototype = 1337;
     expect(t).to.an.instanceof(Thing);
-  }, "The instanceof assertion needs a constructor but function was given.");
+  }, "The instanceof assertion needs a constructor but Function was given.");
 
   if (
     typeof Symbol !== "undefined" &&
@@ -3845,7 +3845,7 @@ it("instanceof", () => {
   ) {
     err(
       () => expect(new Foo()).to.an.instanceof(Symbol()),
-      "The instanceof assertion needs a constructor but symbol was given.",
+      "The instanceof assertion needs a constructor but Symbol was given.",
     );
 
     err(() => {

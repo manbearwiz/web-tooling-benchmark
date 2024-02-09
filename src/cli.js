@@ -3,7 +3,7 @@
 // found in the LICENSE file.
 
 import { version } from "../package.json";
-import suite, { meanOpsPerSecond } from "./suite";
+import suite, { meanOpsPerSecond, init} from "./suite";
 
 console.log(`Running Web Tooling Benchmark v${version}…`);
 console.log("-------------------------------------");
@@ -28,4 +28,6 @@ suite.addEventListener("complete", () => {
   console.log(`Geometric mean: ${hz.toFixed(2).padStart(5)} runs/s`);
 });
 
-suite.run();
+init().then(() =>
+  suite.run(),
+);

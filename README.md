@@ -17,7 +17,7 @@ You can access the latest browser version of the benchmark at <https://manbearwi
 ## Support
 
 The Web Tooling Benchmark is compatible with the latest [active
-LTS](https://github.com/nodejs/Release#release-schedule) version of Node.js. To check the supported Node.js versions for the current release of the benchmark, see the [the `.nvmrc` file](.nvmrc).
+LTS](https://github.com/nodejs/Release#release-schedule) version of Node.js. To check the supported Node.js versions for the current release of the benchmark, see [the `.nvmrc` file](.nvmrc).
 
 ## Building
 
@@ -43,7 +43,7 @@ Run it directly via [Node.js](https://nodejs.org/) by executing the following co
 
 ```sh
 $ node dist/cli.js
-Running Web Tooling Benchmark v0.5.2…
+Running Web Tooling Benchmark v0.5.3…
 -------------------------------------
          acorn:  5.50 runs/s
          babel:  6.10 runs/s
@@ -67,18 +67,17 @@ Running Web Tooling Benchmark v0.5.2…
 Geometric mean:  6.98 runs/s
 ```
 
-Alternatively, open a web browser and navigate to `dist/index.html` to run the benchmark using the browser interface.
+Alternatively, open `dist/index.html` in a browser to run the benchmark using the browser interface.
 
-If you prefer to use JavaScript engine shells, you can run the special bundle in `dist/cli.js`. To install recent versions of the supported JS engine shells, you can use [`jsvu`](https://github.com/GoogleChromeLabs/jsvu). After installation, you can run the benchmark as follows:
+To run with a JavaScript engine shell, use [`jsvu`](https://github.com/GoogleChromeLabs/jsvu) to install recent engine builds, then run:
 
 ```sh
-chakra dist/cli.js
 javascriptcore dist/cli.js
 spidermonkey dist/cli.js
 v8 dist/cli.js
 ```
 
-If you want to run an individual benchmark instead of the entire suite via Node, use the `--only` CLI flag as follows:
+If you want to run an individual benchmark instead of the entire suite via Node, use the `--env only=` webpack flag as follows:
 
 ```sh
 npm run build -- --env only=babel && npm run benchmark

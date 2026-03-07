@@ -13,18 +13,7 @@
     "test": "vitest run",
     "update-lock": "npm install --package-lock",
     "new-benchmark": "wtb-generate",
-    "prepare": "husky install"
-  },
-  "lint-staged": {
-    "src/**/*.css": [
-      "prettier --write"
-    ],
-    "src/**/*.js": [
-      "prettier --write"
-    ],
-    "webpack.config.js": [
-      "prettier --write"
-    ]
+    "prepare": "git config --unset-all --local core.hooksPath || true && lefthook install"
   },
   "browserslist": [
     "defaults"
@@ -65,8 +54,7 @@
     "buffer": "^6.0.3",
     "copy-webpack-plugin": "^11.0.0",
     "html-webpack-plugin": "^5.5.3",
-    "husky": "^8.0.0",
-    "lint-staged": "^15.0.0",
+    "lefthook": "^2.0.0",
     "node-libs-browser": "^2.2.1",
     "os-browserify": "^0.3.0",
     "path-browserify": "^1.0.1",

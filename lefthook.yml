@@ -1,0 +1,29 @@
+output:
+  - failure
+
+pre-commit:
+  parallel: true
+  commands:
+    check-versions:
+      glob: "{package.json,src/targetList.json}"
+      run: node tools/hooks/pre-commit.js
+    check-deps:
+      glob: "package*.json"
+      run: npm ls --depth=0 --silent
+      fail_text: "package.json and package-lock.json are out of sync. Run 'npm install' to fix."
+    prettier:
+      run: npx prettier --write --ignore-unknown {staged_files}
+      stage_fixed: true
+
+pre-push:
+  parallel: true
+  commands:
+    check-deps:
+      run: npm ls --depth=0 --silent
+      fail_text: "package.json and package-lock.json are out of sync. Run 'npm install' to fix."
+    build:
+      run: npm run build
+      fail_text: "Build failed"
+    test:
+      run: npm test
+      fail_text: "Tests failed"

@@ -63,7 +63,7 @@
   },
   "devDependencies": {
     "buffer": "^6.0.3",
-    "copy-webpack-plugin": "^11.0.0",
+    "copy-webpack-plugin": "^14.0.0",
     "html-webpack-plugin": "^5.5.3",
     "husky": "^8.0.0",
     "lint-staged": "^15.0.0",

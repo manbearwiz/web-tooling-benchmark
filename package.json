@@ -10,7 +10,7 @@
     "build:shared-deps": "shared-deps build shared-deps.conf.mjs --clean",
     "build": "webpack",
     "postinstall": "npm run build:uglify-js-bundled && npm run build:shared-deps && npm run build",
-    "test": "vitest run --globals",
+    "test": "vitest run",
     "update-lock": "npm install --package-lock",
     "new-benchmark": "wtb-generate",
     "prepare": "husky install"
@@ -73,7 +73,7 @@
     "self-hosted-shared-dependencies": "^2.0.1",
     "semver": "^7.5.3",
     "stream-browserify": "^3.0.0",
-    "vitest": "^1.1.0",
+    "vitest": "^4.0.0",
     "web-tooling-benchmark-generator": "^1.0.2",
     "webpack": "^5.88.1",
     "webpack-cli": "^5.1.4"

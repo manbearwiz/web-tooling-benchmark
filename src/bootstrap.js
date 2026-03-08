@@ -3,7 +3,7 @@
 // found in the LICENSE file.
 
 import { version } from "../package.json";
-import suite, { meanOpsPerSecond } from "./suite";
+import suite, { meanOpsPerSecond, init } from "./suite";
 
 function displayStatusMessage(message) {
   const element = document.getElementById("status");
@@ -70,11 +70,51 @@ function start() {
   suite.run();
 }
 
-window.onerror = () => {
-  // TODO(bmeurer): Provide some sane error page here.
-  console.log("SOMETHING WENT WRONG!");
+function addTaskListeners() {
+  suite.tasks.forEach((task) => {
+    task.addEventListener("start", () => {
+      if (suite.aborted) return;
+      displayResultMessage(
+        task.name,
+        "<em>Running...</em>",
+        "highlighted-result",
+      );
+      displayStatusMessage(`Running ${task.name}...`);
+    });
+    task.addEventListener("complete", () => {
+      if (suite.aborted) return;
+      displayResultMessage(task.name, `${task.result.hz.toFixed(2)}`, "result");
+      const iterations = task.result.samples.length;
+      displayStatusMessage(`Ran ${iterations} iterations of ${task.name}...`);
+    });
+  });
+}
+
+function displayFatalError(error, message) {
+  document.body.innerHTML = `<h1>ERROR</h1><p>${message}</p><pre>${
+    error?.stack ?? error
+  }</pre>`;
+  console.error(error);
+}
+
+async function bootstrap() {
+  try {
+    await init();
+    addTaskListeners();
+    initialize();
+  } catch (error) {
+    displayFatalError(error, "Failed to initialize benchmark suite.");
+  }
+}
+
+window.onerror = (message, _source, _lineno, _colno, error) => {
+  displayFatalError(
+    error ?? message,
+    "Unexpected runtime error during benchmark.",
+  );
+  return true;
 };
-window.onload = initialize;
+window.onload = bootstrap;
 
 // Helpers for automated runs in Telemetry/Catapult.
 window.automated = {
@@ -85,24 +125,6 @@ window.automated = {
   // The function that starts the run.
   start,
 };
-
-suite.tasks.forEach((task) => {
-  task.addEventListener("start", () => {
-    if (suite.aborted) return;
-    displayResultMessage(
-      task.name,
-      "<em>Running...</em>",
-      "highlighted-result",
-    );
-    displayStatusMessage(`Running ${task.name}...`);
-  });
-  task.addEventListener("complete", () => {
-    if (suite.aborted) return;
-    displayResultMessage(task.name, `${task.result.hz.toFixed(2)}`, "result");
-    const iterations = task.result.samples.length;
-    displayStatusMessage(`Ran ${iterations} iterations of ${task.name}...`);
-  });
-});
 
 suite.addEventListener("complete", () => {
   window.automated.completed = true;
@@ -127,7 +149,9 @@ suite.addEventListener("complete", () => {
 
 suite.addEventListener("error", ({ task: { name, result } }) => {
   window.automated.completed = true;
-  document.body.innerHTML = `<h1>ERROR</h1><p>Encountered errors during execution of ${name} test. Refusing to run a partial benchmark suite.</p><pre>${result.error.stack}</pre>`;
-  console.error(result.error);
+  displayFatalError(
+    result.error,
+    `Encountered errors during execution of ${name} test. Refusing to run a partial benchmark suite.`,
+  );
   suite.abort();
 });

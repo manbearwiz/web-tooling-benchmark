@@ -34,6 +34,8 @@ module.exports = (env) => [
     entry: "./cli.js",
     output: {
       filename: "cli.js",
+      chunkLoading: "require",
+      chunkFormat: "commonjs",
     },
     bail: true,
     resolve: {
@@ -110,13 +112,6 @@ module.exports = (env) => [
       }),
       new CopyWebpackPlugin({
         patterns: [{ from: "style.css" }, { from: "Logo.png" }],
-      }),
-      new webpack.BannerPlugin({
-        banner:
-          "// Work-around for the weird JaegerMonkey\n" +
-          "// work-around inside benchmark.js.\n" +
-          "const define = { amd: {} };\n",
-        raw: true,
       }),
       new HtmlWebpackPlugin({
         template: "./index.html",

@@ -16,10 +16,13 @@ const suite = new Bench({
   iterations: 20,
 });
 
-getTarget().forEach((target) => {
-  const { name, fn } = require(`./${target}-benchmark`);
-  suite.add(name, fn);
-});
+export async function init() {
+  const targets = getTarget();
+  const modules = await Promise.all(
+    targets.map((target) => import(`./${target}-benchmark`)),
+  );
+  modules.forEach(({ name, fn }) => suite.add(name, fn));
+}
 
 /**
  * Computes the geometric mean of the operations per second of the given results.

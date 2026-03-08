@@ -3,14 +3,21 @@
 // found in the LICENSE file.
 
 import { version } from "../package.json";
-import suite, { meanOpsPerSecond } from "./suite";
+import suite, { meanOpsPerSecond, init } from "./suite";
 
 console.log(`Running Web Tooling Benchmark v${version}…`);
 console.log("-------------------------------------");
 
+function fatalError(message, error) {
+  console.error(`${message}\n${error?.stack ?? error}`);
+  process.exitCode = 1;
+}
+
 suite.addEventListener("error", ({ task: { name, result } }) => {
-  console.log(`Encountered error running benchmark ${name}, aborting…`);
-  console.log(result.error.stack);
+  fatalError(
+    `Encountered error running benchmark ${name}, aborting…`,
+    result.error,
+  );
   suite.abort();
 });
 
@@ -28,4 +35,13 @@ suite.addEventListener("complete", () => {
   console.log(`Geometric mean: ${hz.toFixed(2).padStart(5)} runs/s`);
 });
 
-suite.run();
+async function main() {
+  try {
+    await init();
+    await suite.run();
+  } catch (error) {
+    fatalError("Failed to initialize benchmark suite, aborting…", error);
+  }
+}
+
+main();

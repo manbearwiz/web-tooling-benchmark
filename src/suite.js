@@ -19,7 +19,7 @@ const suite = new Bench({
 export async function init() {
   const targets = getTarget();
   const modules = await Promise.all(
-    targets.map((target) => import(`./${target}-benchmark`)),
+    targets.map((target) => import(`./${target}-benchmark.js`)),
   );
   modules.forEach(({ name, fn }) => suite.add(name, fn));
 }

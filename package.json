@@ -8,7 +8,10 @@
     "benchmark": "node dist/cli.js",
     "build:uglify-js-bundled": "uglifyjs -b preamble=\"'let UglifyJS = {}; export default UglifyJS;'\" --self > build/uglify-js-bundled.js",
     "build:shared-deps": "shared-deps build shared-deps.conf.mjs --clean",
-    "build": "webpack",
+    "dev": "vite --mode browser",
+    "build": "vite build",
+    "build:browser": "vite build --mode browser",
+    "preview": "vite preview",
     "postinstall": "npm run build:uglify-js-bundled && npm run build:shared-deps && npm run build",
     "test": "vitest run",
     "update-lock": "npm install --package-lock",
@@ -39,6 +42,7 @@
     "esprima": "4.0.1",
     "jshint": "2.13.6",
     "lebab": "3.2.3",
+    "lit-html": "^3.0.2",
     "memfs": "^4.2.0",
     "postcss": "8.4.32",
     "postcss-nested": "6.0.1",
@@ -51,28 +55,23 @@
     "uglify-js": "3.17.4"
   },
   "devDependencies": {
-    "buffer": "^6.0.3",
-    "copy-webpack-plugin": "^14.0.0",
-    "html-webpack-plugin": "^5.5.3",
     "lefthook": "^2.0.0",
-    "node-libs-browser": "^2.2.1",
-    "os-browserify": "^0.3.0",
-    "path-browserify": "^1.0.1",
+    "sass": "^1.69.5",
     "self-hosted-shared-dependencies": "^2.0.1",
     "semver": "^7.5.3",
-    "stream-browserify": "^3.0.0",
-    "vitest": "^4.0.0",
-    "web-tooling-benchmark-generator": "^1.0.2",
-    "webpack": "^5.88.1",
-    "webpack-cli": "^5.1.4"
+    "vite": "^7.3.1",
+    "vite-plugin-node-polyfills": "^0.25.0",
+    "vitest": "^4.0.18",
+    "web-tooling-benchmark-generator": "^1.0.2"
   },
   "overrides": {
-    "magic-string": "0.30.1",
-    "node-gyp": "^9.4.0",
-    "make-fetch-happen": "^15.0.0",
-    "yargs-parser": "^21.1.1",
+    "chai": "5.0.0",
     "fbjs": "^3.0.5",
-    "zip-dir": "2.0.0",
-    "chai": "5.0.0"
+    "https-proxy-agent": "^7.0.1",
+    "magic-string": "0.30.1",
+    "make-fetch-happen": "^15.0.0",
+    "node-gyp": "^9.4.0",
+    "yargs-parser": "^21.1.1",
+    "zip-dir": "2.0.0"
   }
 }

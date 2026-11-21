@@ -4,6 +4,6 @@
 
 import { fn } from "./source-map-benchmark";
 
-vi.mock('fs')
+vi.mock("fs");
 
-it("source-map-benchmark runs to completion", () => void fn());
+it("source-map-benchmark runs to completion", () => fn());

@@ -16,6 +16,10 @@ const payloads = [
 }));
 
 export const name = "terser";
-export function fn() {
-  return payloads.map(({ payload, options }) => minify(payload, options));
+// terser 5's minify() is async, so wait for every result. Otherwise a
+// failure would surface as an unhandled rejection instead of failing the run.
+export async function fn() {
+  return Promise.all(
+    payloads.map(({ payload, options }) => minify(payload, options)),
+  );
 }

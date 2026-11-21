@@ -4,6 +4,6 @@
 
 import { fn } from "./terser-benchmark";
 
-vi.mock('fs')
+vi.mock("fs");
 
-it("terser-benchmark runs to completion", () => void fn());
+it("terser-benchmark runs to completion", () => fn());

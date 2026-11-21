@@ -4,6 +4,6 @@
 
 import { fn } from "./espree-benchmark";
 
-vi.mock('fs')
+vi.mock("fs");
 
-it("espree-benchmark runs to completion", () => void fn());
+it("espree-benchmark runs to completion", () => fn());

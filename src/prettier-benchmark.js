@@ -29,7 +29,7 @@ const payloads = [
   },
   {
     name: "todomvc/react/footer.jsx",
-    options: { jsxBracketSameLine: true, semi: true, useTabs: true },
+    options: { bracketSameLine: true, semi: true, useTabs: true },
   },
   {
     name: "todomvc/react/todoItem.jsx",

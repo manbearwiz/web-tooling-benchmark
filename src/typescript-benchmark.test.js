@@ -4,6 +4,6 @@
 
 import { fn } from "./typescript-benchmark";
 
-vi.mock('fs')
+vi.mock("fs");
 
-it("typescript-benchmark runs to completion", () => void fn());
+it("typescript-benchmark runs to completion", () => fn());

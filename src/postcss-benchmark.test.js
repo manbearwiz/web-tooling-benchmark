@@ -4,6 +4,6 @@
 
 import { fn } from "./postcss-benchmark";
 
-vi.mock('fs')
+vi.mock("fs");
 
-it("postcss-benchmark runs to completion", () => void fn());
+it("postcss-benchmark runs to completion", () => fn());

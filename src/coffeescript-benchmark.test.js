@@ -4,6 +4,6 @@
 
 import { fn } from "./coffeescript-benchmark";
 
-vi.mock('fs')
+vi.mock("fs");
 
-it("coffeescript-benchmark runs to completion", () => void fn());
+it("coffeescript-benchmark runs to completion", () => fn());

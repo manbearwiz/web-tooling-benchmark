@@ -14,10 +14,19 @@ analysis](docs/in-depth.md).
 
 You can access the latest browser version of the benchmark at <https://manbearwiz.github.io/web-tooling-benchmark/>.
 
+> This is a fork of [v8/web-tooling-benchmark](https://github.com/v8/web-tooling-benchmark).
+> Version 0.6.0 updates the tools and several input files (see [Changes from v0.5.3](#changes-from-v053)),
+> so its scores are not comparable with v0.5.3 results, including older
+> Phoronix Test Suite (`pts/node-web-tooling`) results.
+
 ## Support
 
-The Web Tooling Benchmark is compatible with the latest [active
-LTS](https://github.com/nodejs/Release#release-schedule) version of Node.js. To check the supported Node.js versions for the current release of the benchmark, see [the `.nvmrc` file](.nvmrc).
+The benchmark runs under [Node.js](https://nodejs.org/) and in browsers. CI tests the
+Node.js versions listed in [the CI workflow](.github/workflows/ci.yml); `.nvmrc`
+names the version used for development.
+
+Standalone engine shells (`d8`, `jsc`, `jsshell`) are no longer supported: the CLI bundle
+loads the benchmarked tools from `node_modules` and relies on Node.js globals.
 
 ## Building
 
@@ -27,58 +36,66 @@ To build the benchmark suite, run:
 npm install
 ```
 
-After running the command, a bundled version suitable for running in JS shells (e.g., `d8`, `jsc` or `jsshell`) will be available at `dist/cli.js`, along with a browser version at `dist/browser.js`, which is used in `dist/index.html`.
+This builds the Node.js version into `dist/cli.js`. It loads the benchmarked tools from
+`node_modules`, so run it from the repository checkout.
 
-If you wish to build an individual benchmark instead of the entire suite, use the `--env only=` CLI flag like this:
+To build the browser version into `dist-browser/`, run:
 
 ```sh
-npm run build -- --env only=babel
+npm run build:browser
+```
+
+To build an individual benchmark instead of the entire suite, set `VITE_ONLY`:
+
+```sh
+VITE_ONLY=babel npm run build
 ```
 
 ## Running
 
-You have multiple options for running the benchmark suite:
-
-Run it directly via [Node.js](https://nodejs.org/) by executing the following command:
+Run it via [Node.js](https://nodejs.org/):
 
 ```sh
 $ node dist/cli.js
-Running Web Tooling Benchmark v0.5.3…
+Running Web Tooling Benchmark v0.6.0…
 -------------------------------------
-         acorn:  5.50 runs/s
-         babel:  6.10 runs/s
-  babel-minify:  9.13 runs/s
-       babylon:  8.00 runs/s
-         buble:  4.77 runs/s
-          chai: 14.47 runs/s
-  coffeescript:  5.62 runs/s
-        espree:  4.05 runs/s
-       esprima:  6.68 runs/s
-        jshint:  7.84 runs/s
-         lebab:  7.52 runs/s
-       postcss:  5.06 runs/s
-       prepack:  6.26 runs/s
-      prettier:  5.97 runs/s
-    source-map:  8.60 runs/s
-        terser: 16.40 runs/s
-    typescript: 10.04 runs/s
-     uglify-js:  3.81 runs/s
+         acorn:  8.65 runs/s
+         babel:  2.05 runs/s
+  babel-minify: 18.22 runs/s
+       babylon: 10.90 runs/s
+         buble:  8.42 runs/s
+          chai: 19.17 runs/s
+  coffeescript:  5.99 runs/s
+        espree: 10.17 runs/s
+       esprima: 13.06 runs/s
+        jshint: 15.93 runs/s
+         lebab:  8.17 runs/s
+       postcss: 10.49 runs/s
+       prepack:  5.35 runs/s
+      prettier:  8.76 runs/s
+    source-map: 45.76 runs/s
+        terser: 28.19 runs/s
+    typescript: 10.18 runs/s
+     uglify-js:  6.43 runs/s
 -------------------------------------
-Geometric mean:  6.98 runs/s
+Geometric mean: 10.51 runs/s
 ```
 
-Alternatively, open `dist/index.html` in a browser to run the benchmark using the browser interface.
+The last line is the overall score. If any benchmark throws, the run stops, prints the
+error and exits with a non-zero status instead of reporting a score.
 
-To run with a JavaScript engine shell, use [`jsvu`](https://github.com/GoogleChromeLabs/jsvu) to install recent engine builds, then run:
+Alternatively, serve `dist-browser/` and open it in a browser.
 
-```sh
-javascriptcore dist/cli.js
-spidermonkey dist/cli.js
-v8 dist/cli.js
-```
+## Changes from v0.5.3
 
-If you want to run an individual benchmark instead of the entire suite via Node, use the `--env only=` webpack flag as follows:
-
-```sh
-npm run build -- --env only=babel && npm run benchmark
-```
+- Harness: [tinybench](https://github.com/tinylibs/tinybench) replaces benchmark.js.
+  Each benchmark takes exactly 20 timed samples with no warm-up, and its score is
+  1000 divided by the mean sample time in milliseconds.
+- Build: Vite replaces webpack, and the code uses ES modules.
+- Tools: every benchmarked tool except source-map (still 0.6.1) is updated; see `package.json`. Babylon is now
+  `@babel/parser`, and Prettier 3 formats asynchronously.
+- Inputs: jQuery 3.7.1, Backbone.js 1.5.0, lodash 4.17.21, Bootstrap 5.3.2,
+  Foundation 6.8.1, Vue 2.7.15 and the CoffeeScript 2.7.0 lexer replace the older copies.
+  MooTools and Angular Material are gone. espree and esprima now also parse lodash,
+  Preact and Redux, and prepack also processes underscore. See the
+  [in-depth analysis](docs/in-depth.md) for each benchmark's inputs.

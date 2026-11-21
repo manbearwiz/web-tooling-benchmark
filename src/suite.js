@@ -6,20 +6,40 @@ import { Bench } from "tinybench";
 import { getTarget } from "./cli-flags-helper";
 import gmean from "compute-gmean";
 
-// We need to run deterministically, so we set 'maxTime' to 0, which
-// disables the variable iteration count feature of benchmark.js,
-// and specify 'minSamples' as 20 to have it collect exactly 20
-// samples. We leave the 'initCount' to the default of 1. See
-// https://github.com/v8/web-tooling-benchmark/issues/6 for details.
+// We need to run deterministically, so every benchmark collects exactly
+// 20 samples: 'time' is 0, so tinybench stops after 'iterations' samples
+// instead of running for a fixed duration. There is no warm-up phase.
+// Each benchmark's score is 1000 / (mean sample time in ms). See
+// https://github.com/v8/web-tooling-benchmark/issues/6 for the background.
+//
+// tinybench has no Bench#abort(); a suite is stopped through its
+// AbortSignal, which skips every task that has not started yet.
+const controller = new AbortController();
+
 const suite = new Bench({
   time: 0,
   iterations: 20,
+  signal: controller.signal,
 });
+
+/**
+ * Stops the suite: tasks that have not started yet are skipped.
+ */
+export function abort() {
+  controller.abort();
+}
+
+/**
+ * Whether the suite has been aborted, e.g. because a benchmark threw.
+ */
+export function isAborted() {
+  return controller.signal.aborted;
+}
 
 export async function init() {
   const targets = getTarget();
   const modules = await Promise.all(
-    targets.map((target) => import(`./${target}-benchmark`)),
+    targets.map((target) => import(`./${target}-benchmark.js`)),
   );
   modules.forEach(({ name, fn }) => suite.add(name, fn));
 }

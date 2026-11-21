@@ -4,6 +4,6 @@
 
 import { fn } from "./esprima-benchmark";
 
-vi.mock('fs')
+vi.mock("fs");
 
-it("esprima-benchmark runs to completion", () => void fn());
+it("esprima-benchmark runs to completion", () => fn());

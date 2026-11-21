@@ -4,6 +4,6 @@
 
 import { fn } from "./buble-benchmark";
 
-vi.mock('fs')
+vi.mock("fs");
 
-it("buble-benchmark runs to completion", () => void fn());
+it("buble-benchmark runs to completion", () => fn());

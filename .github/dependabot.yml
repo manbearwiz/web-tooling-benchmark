@@ -1,10 +1,42 @@
 version: 2
 updates:
-  - package-ecosystem: 'npm'
-    directory: '/'
+  - package-ecosystem: "npm"
+    directory: "/"
     schedule:
-      interval: 'weekly'
+      interval: "weekly"
     commit-message:
       prefix: fix
       prefix-development: build
       include: scope
+    # These packages are the benchmark: updating one changes the workload and
+    # the scores. Update them by hand in batches, together with a version bump.
+    ignore:
+      - dependency-name: "@babel/parser"
+      - dependency-name: "@babel/standalone"
+      - dependency-name: "acorn"
+      - dependency-name: "acorn-walk"
+      - dependency-name: "autoprefixer"
+      - dependency-name: "babel-minify"
+      - dependency-name: "buble"
+      - dependency-name: "chai"
+      - dependency-name: "coffeescript"
+      - dependency-name: "esprima"
+      - dependency-name: "espree"
+      - dependency-name: "jshint"
+      - dependency-name: "lebab"
+      - dependency-name: "postcss"
+      - dependency-name: "postcss-nested"
+      - dependency-name: "prepack"
+      - dependency-name: "prettier"
+      - dependency-name: "source-map"
+      - dependency-name: "terser"
+      - dependency-name: "typescript"
+      - dependency-name: "uglify-js"
+      - dependency-name: "caniuse-lite"
+      - dependency-name: "browserslist"
+      # The measurement harness.
+      - dependency-name: "tinybench"
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"

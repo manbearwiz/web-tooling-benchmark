@@ -17,13 +17,14 @@ the [Babylon](https://github.com/babel/babylon) parser used by
 
 This benchmarks runs the Acorn tokenizer, the parser and the full AST (Abstract
 Syntax Tree) walker on several popular inputs, including
+
 - the [Preact](https://github.com/developit/preact) 8.2.5 bundle,
-- the [lodash](https://lodash.com) 4.17.4 bundle,
+- the [lodash](https://lodash.com) 4.17.21 bundle,
 - the [underscore](http://underscorejs.org/) 1.8.3 bundle,
-- an ES2015 module containing the untranspiled [Vue](https://github.com/vuejs/vue) bundle,
-- the [jQuery](http://jquery.com) 3.2.1 distribution,
+- an ES2015 module containing the untranspiled [Vue](https://github.com/vuejs/vue) 2.7.15 bundle,
+- the [jQuery](http://jquery.com) 3.7.1 distribution,
 - the minified [Redux](https://redux.js.org) 3.7.2 distribution,
-- the [Backbone.js](http://backbonejs.org) 1.1.0 bundle,
+- the [Backbone.js](http://backbonejs.org) 1.5.0 bundle,
 - and the (concatenated) JavaScript source for the Vanilla ES2015 test in the [Speedometer](https://browserbench.org/Speedometer).
 
 ## babel
@@ -33,7 +34,7 @@ Syntax Tree) walker on several popular inputs, including
 this point in time and used in the vast majority of web projects nowadays.
 
 This benchmark runs the Babel transformation logic using the `es2015` preset on a 196KiB
-ES2015 module containing the untranspiled [Vue](https://github.com/vuejs/vue) bundle.
+ES2015 module containing the untranspiled [Vue](https://github.com/vuejs/vue) 2.7.15 bundle.
 Note that this explicitly excludes the [Babylon](https://github.com/babel/babylon) parser
 and only measures the throughput of the actual transformations. The parser is tested
 separately by the `babylon` benchmark below.
@@ -53,10 +54,10 @@ that can be consumed by the core transformation logic in Babel. It is built on t
 
 This benchmark runs the Babylon parser on different popular inputs, including the
 [Preact](https://github.com/developit/preact) 8.2.5 bundle, the [lodash](https://lodash.com)
-4.17.4 bundle, the JSX files from the React TodoMVC example app, the
+4.17.21 bundle, the JSX files from the React TodoMVC example app, the
 [underscore](http://underscorejs.org/) 1.8.3 bundle, an ES2015 module containing the
-untranspiled [Vue](https://github.com/vuejs/vue) bundle, the [jQuery](http://jquery.com)
-3.2.1 distribution, the minified [Redux](https://redux.js.org) 3.7.2 distribution, and
+untranspiled [Vue](https://github.com/vuejs/vue) 2.7.15 bundle, the [jQuery](http://jquery.com)
+3.7.1 distribution, the minified [Redux](https://redux.js.org) 3.7.2 distribution, and
 the (concatenated) JavaScript source for the Vanilla ES2015 test in the
 [Speedometer](https://browserbench.org/Speedometer).
 
@@ -88,8 +89,8 @@ itself.
 the good parts of JavaScript in a simple way. At some point CoffeeScript was very
 popular.
 
-This benchmark runs the CoffeeScript compiler on the [`lexer.coffee`](https://github.com/v8/web-tooling-benchmark/blob/third_party/coffeescript-lexer-2.0.1.coffee)
-file from the CoffeeScript 2.0.1 distribution.
+This benchmark runs the CoffeeScript compiler on the [`lexer.coffee`](../third_party/coffeescript-lexer-2.7.0.coffee)
+file from the CoffeeScript 2.7.0 distribution.
 
 ## espree
 
@@ -102,9 +103,12 @@ The popular analysis framework [ESLint](https://eslint.org) is built on Espree
 today.
 
 This benchmark runs Espree on a several common scripts, including
-- the [Backbone.js](http://backbonejs.org) 1.1.0 bundle,
-- the [jQuery](http://jquery.com) 3.2.1 distribution,
-- the [MooTools](https://mootools.net) 1.6.0 bundle,
+
+- the [Backbone.js](http://backbonejs.org) 1.5.0 bundle,
+- the [jQuery](http://jquery.com) 3.7.1 distribution,
+- the [lodash](https://lodash.com) 4.17.21 core build,
+- the [Preact](http://preactjs.com) 8.2.5 bundle,
+- the [Redux](https://redux.js.org) 3.7.2 bundle,
 - and the [underscore](http://underscorejs.org/) 1.8.3 bundle.
 
 ## esprima
@@ -117,9 +121,12 @@ ESLint and Babel, and is still in use by a lot of analysis tools.
 
 This benchmark runs both the tokenizer and the parser on a variety of common scripts,
 including
-- the [Backbone.js](http://backbonejs.org) 1.1.0 bundle,
-- the [jQuery](http://jquery.com) 3.2.1 distribution,
-- the [MooTools](https://mootools.net) 1.6.0 bundle,
+
+- the [Backbone.js](http://backbonejs.org) 1.5.0 bundle,
+- the [jQuery](http://jquery.com) 3.7.1 distribution,
+- the [lodash](https://lodash.com) 4.17.21 core build,
+- the [Preact](http://preactjs.com) 8.2.5 bundle,
+- the [Redux](https://redux.js.org) 3.7.2 bundle,
 - and the [underscore](http://underscorejs.org/) 1.8.3 bundle.
 
 ## jshint
@@ -129,7 +136,8 @@ in JavaScript. At some point it was very popular, but nowadays it seems that man
 have switch or are switching to [ESLint](https://eslint.org).
 
 This benchmark runs JSHint on
-- the [lodash](https://lodash.com) 4.17.4 bundle,
+
+- the [lodash](https://lodash.com) 4.17.21 bundle,
 - the [Preact](http://preactjs.com) 8.2.5 bundle,
 - and the [underscore](http://underscorejs.org) 1.8.3 distribution.
 
@@ -149,9 +157,9 @@ inline images, and more.
 
 This benchmark runs the PostCSS processor with [Autoprefixer](https://github.com/postcss/autoprefixer)
 and [postcss-nested](https://github.com/postcss/postcss-nested) plugins on
-- the [Bootstrap](https://getbootstrap.com/) 4.0.0 bundle.
-- the [Foundation](https://foundation.zurb.com/) 6.4.2 bundle.
-- the [Angular Material](https://material.angularjs.org) 1.1.8 bundle.
+
+- the [Bootstrap](https://getbootstrap.com/) 5.3.2 bundle, and
+- the [Foundation](https://get.foundation/) 6.8.1 bundle.
 
 ## prepack
 
@@ -162,8 +170,10 @@ is a simple sequence of assignments. This gets rid of most intermediate computat
 and object allocations. It currently focuses on React Native use cases.
 
 This benchmark runs prepack on both
-- the [Preact](https://github.com/developit/preact) 8.2.5 bundle (unminified) as well as
-- the [Redux](https://github.com/reactjs/redux) 3.7.2 bundle (minified).
+
+- the [Preact](https://github.com/developit/preact) 8.2.5 bundle (unminified),
+- the [Redux](https://github.com/reactjs/redux) 3.7.2 bundle (minified), and
+- the [underscore](http://underscorejs.org/) 1.8.3 bundle (unminified).
 
 ## prettier
 
@@ -173,7 +183,8 @@ to a consistent style. It is often used in web projects today to automatically f
 JavaScript, HTML, CSS and other files.
 
 This benchmark runs prettier on different inputs, including
-- the [lodash](https://lodash.com) 4.17.4 bundle,
+
+- the [lodash](https://lodash.com) 4.17.21 bundle,
 - the [Preact](http://preactjs.com) 8.2.5 bundle, and
 - the JSX files from the React [todomvc](https://github.com/tastejs/todomvc) example app.
 
@@ -184,8 +195,8 @@ to generate and consume source maps, which in turn are used by browsers to displ
 proper JavaScript when debugging a minified application.
 
 This benchmark stresses the source-map tool on both parsing and serializing a
-variety of different source maps, including the [Preact](http://preactjs.com)
-8.2.5 source map.
+variety of different source maps: the [Preact](http://preactjs.com) 8.2.5,
+underscore 1.8.3 and source-map 0.5.7 source maps.
 
 ## terser
 
@@ -210,4 +221,4 @@ compressor and beautifier toolkit, which is commonly used to minimize JavaScript
 bundles.
 
 This benchmark runs the UglifyJS minifier on the (concatenated) JavaScript source for
-the ES2015 test in the [Lodash](https://lodash.com) module.
+the [lodash](https://lodash.com) 4.17.21 core build.

@@ -4,6 +4,8 @@ import { nodePolyfills } from "vite-plugin-node-polyfills";
 
 export default defineConfig(({ mode }) => ({
   build: {
+    // Separate output folders, so building one version doesn't wipe the other.
+    outDir: mode === "browser" ? "dist-browser" : "dist",
     ...(mode !== "browser"
       ? {
           lib: {
@@ -32,12 +34,13 @@ export default defineConfig(({ mode }) => ({
         }
       : {}),
     minify: false,
-    sourcemap: true,
+    // Source maps of the browser bundles (typescript, babel) need more than 8 GB to build.
+    sourcemap: mode !== "browser",
   },
   plugins: [
     nodePolyfills({
       overrides: {
-        fs: resolve(__dirname, '__mocks__/fs.js'),
+        fs: resolve(__dirname, "__mocks__/fs.js"),
       },
       include: [
         "buffer",
@@ -45,10 +48,13 @@ export default defineConfig(({ mode }) => ({
         "module",
         "os",
         "path",
-        "process",
+        // The CLI must use Node's real process object, or process.exitCode
+        // and process.env changes go to a shim and never reach Node.
+        ...(mode === "browser" ? ["process"] : []),
         "stream",
         "util",
       ],
+      globals: { process: mode === "browser" },
     }),
   ],
 }));

@@ -78,6 +78,8 @@ const resultsTemplate = (activeName) =>
 function displayFatalError(error, message) {
   window.automated.completed = true;
   window.automated.error = message;
+  // render() keeps existing children, so clear the page first.
+  document.body.replaceChildren();
   render(
     html`<h1>ERROR</h1>
       <p>${message}</p>
